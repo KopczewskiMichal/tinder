@@ -73,6 +73,7 @@ export default function Register () {
     onSubmit: values => {
       // handleSubmit(values)
       alert(JSON.stringify(values, null, 2))
+      
     }
   });
   

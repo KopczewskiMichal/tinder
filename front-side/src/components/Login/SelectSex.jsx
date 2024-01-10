@@ -1,5 +1,5 @@
 import React from "react";
-import { useFormikContext } from "./Register"; //Gdyby nie ten input można by użyć FormInput bez kopiowania
+import { useFormikContext } from "./Register";
 
 export default function SelectSex() {
   const formik = useFormikContext();
@@ -8,13 +8,13 @@ export default function SelectSex() {
 
   return (
     <div>
-      <label htmlFor="selectedOption">Select sex:</label>
+      <label htmlFor="sex">Select sex:</label>
       <select
-        id="selectedOption"
-        name="selectedOption"
+        id="sex"
+        name="sex"
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
-        value={formik.values.selectedOption}
+        value={formik.values.sex} 
       >
         {options.map((option) => (
           <option key={option} value={option}>

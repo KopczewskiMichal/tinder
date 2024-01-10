@@ -9,7 +9,13 @@ const PORT = 8080;
 
 app.get(("/test"), (req, res) => {
   res.send("Server nasłuchuje...")
+  console.log("Obsłużono zapytanie")
 })
+
+app.post(("/Register"), (req, res)=> {
+  console.log(req.body)
+  res.send("Server nasłuchuje...")
+});
 
 
 
