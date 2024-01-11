@@ -3,6 +3,7 @@ import CreateAccountInput from "./RegisterInput";
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import SelectSex from "./SelectSex";
+import axios from "axios";
 
 const FormikContext = createContext();
 
@@ -11,11 +12,8 @@ export const useFormikContext = () => {
 };
 
 export default function Register () {
-  // const handleSubmit = (values) => {
-  //   alert(JSON.stringify(values, null, 2))
-    
-  // }  
-  //TODO poprawić ten formularz
+
+  // TODO obsługa zwrotu przez server informacji że podano nieprawidłowe dane
 
   const formik = useFormik({
     initialValues: {
@@ -71,9 +69,14 @@ export default function Register () {
         .required("Podaj swoją płeć")
       }),
     onSubmit: values => {
-      // handleSubmit(values)
-      alert(JSON.stringify(values, null, 2))
-      
+      const toSend = JSON.stringify(values, null, 2)
+      axios.post("http://localhost:8080/Register", values)
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
     }
   });
   

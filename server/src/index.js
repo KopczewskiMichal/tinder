@@ -1,10 +1,14 @@
-const express = require('express');
+const DBActions = require('./DBActions');
 
+const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 const cors = require('cors');
 app.use(cors());
-app.use(express.text({ type: 'text/*' })); // Bez tej linii nie działa
+app.use(express.text({ type: 'text/*' }));
 const PORT = 8080;
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.get(("/test"), (req, res) => {
@@ -12,9 +16,17 @@ app.get(("/test"), (req, res) => {
   console.log("Obsłużono zapytanie")
 })
 
-app.post(("/Register"), (req, res)=> {
-  console.log(req.body)
-  res.send("Server nasłuchuje...")
+app.post(("/Register"), async (req, res)=> {
+  // TODO Obsługa walidacji danych po stronie servera
+
+  try {
+    const database = new DBActions();
+    await database.createAccount(req.body);
+    res.send("Utworzono konto")
+  } catch (error) {
+    console.error("Błąd podczas pobierania danych:", error);
+    res.status(500).send("Wystąpił błąd podczas przetwarzania zapytania.");
+  }
 });
 
 
