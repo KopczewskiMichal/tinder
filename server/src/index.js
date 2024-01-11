@@ -21,6 +21,7 @@ app.post(("/Register"), async (req, res)=> {
 
   try {
     const database = new DBActions();
+    
     await database.createAccount(req.body);
     res.send("Utworzono konto")
   } catch (error) {

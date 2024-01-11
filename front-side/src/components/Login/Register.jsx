@@ -69,13 +69,12 @@ export default function Register () {
         .required("Podaj swoją płeć")
       }),
     onSubmit: values => {
-      const toSend = JSON.stringify(values, null, 2)
       axios.post("http://localhost:8080/Register", values)
       .then(function (response) {
         console.log(response);
       })
       .catch(function (error) {
-        console.log(error);
+        alert(error)
       });
     }
   });
