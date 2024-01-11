@@ -13,7 +13,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get(("/test"), (req, res) => {
   res.send("Server nasłuchuje...")
-  console.log("Obsłużono zapytanie")
 })
 
 app.post(("/Register"), async (req, res)=> {
@@ -21,11 +20,14 @@ app.post(("/Register"), async (req, res)=> {
 
   try {
     const database = new DBActions();
-    
-    await database.createAccount(req.body);
-    res.send("Utworzono konto")
+    const existInDb = await database.isAccountInDB(req.body.email);
+    if (!existInDb) {
+      await database.createAccount(req.body);
+      res.send("Utworzono konto")
+    } else {
+      res.status(500).send("Account with this email exist.")
+    }
   } catch (error) {
-    console.error("Błąd podczas pobierania danych:", error);
     res.status(500).send(error.toString());
   }
 });

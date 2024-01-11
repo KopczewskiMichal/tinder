@@ -85,7 +85,7 @@ export default function Register () {
         <CreateAccountInput name="email" type="email"/>
         <CreateAccountInput name="name" type="text"/>
         <CreateAccountInput name="surname" type="text"/>
-        <CreateAccountInput name="password" type="text"/>
+        <CreateAccountInput name="password" type="password"/>
         <CreateAccountInput name="dateOfBirth" type="date"/>
         <SelectSex/>
         <button type="reset" onClick={() => formik.resetForm()}>Reset</button>
