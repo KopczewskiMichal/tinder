@@ -25,7 +25,7 @@ app.post(("/Register"), async (req, res)=> {
     res.send("Utworzono konto")
   } catch (error) {
     console.error("Błąd podczas pobierania danych:", error);
-    res.status(500).send("Wystąpił błąd podczas przetwarzania zapytania.");
+    res.status(500).send(error.toString());
   }
 });
 
