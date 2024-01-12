@@ -15,6 +15,22 @@ app.get(("/test"), (req, res) => {
   res.send("Server nasłuchuje...")
 })
 
+app.get(("/profiles/:id"), async (req, res) => {
+  try {
+    const userID = req.params.id
+    const database = new DBActions();
+    const profileInfo = await database.getProfileInfo(userID);
+    if (profileInfo != null) {
+      res.send(profileInfo)
+    } else {
+      res.status(500).send("Account with this ID doesn't exist.")
+    }
+  } catch (error) {
+    res.status(500).send(error.toString());
+  }
+
+})
+
 app.post(("/Register"), async (req, res)=> {
   try {
     const database = new DBActions();

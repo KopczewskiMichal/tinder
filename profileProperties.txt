@@ -1,0 +1,14 @@
+Plik zawiera możliwe WIDOCZNE DLA UŻYTKOWNIA pola w profilu.
+
+Imie
+Nazwisko
+Zdjęcia [] z możliwością zmiany kolejności w procesie edycji (Strzałkami)
+Wiek
+wzrost
+Województwo
+Jak często pijesz []
+Jak często palisz []
+Zainteresowania [tablica]
+Wykształcenie 
+Szukam: [miłość/przelotna zabawa/znajomych /jeszcze nwm]
+

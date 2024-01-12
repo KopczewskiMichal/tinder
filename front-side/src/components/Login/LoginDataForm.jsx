@@ -14,14 +14,12 @@ export const useFormikContext = () => {
 export default function LoginDataForm() {
   const navigate = useNavigate();
 
-  function setCookie (name, value, days) {
+  function setCookie(name, value, days) {
     const expirationDate = new Date();
     expirationDate.setDate(expirationDate.getDate() + days);
     const cookieString = `${name}=${value}; expires=${expirationDate.toUTCString()}; path=/`;
     document.cookie = cookieString;
-  };
-  
-
+  }
 
   const formik = useFormik({
     initialValues: {
@@ -47,8 +45,8 @@ export default function LoginDataForm() {
       axios
         .post("http://localhost:8080/Login", values)
         .then(function (response) {
-          setCookie('userID', response.data, 7);
-          navigate("/mainPage")
+          setCookie("userID", response.data, 7);
+          navigate("/mainPage");
         })
         .catch(function (error) {
           alert(error);

@@ -5,6 +5,7 @@
 const { MongoClient } = require('mongodb');
 const { v4: uuidv4 } = require('uuid');
 const crypto = require('crypto');
+const { error } = require('console');
 
 class DBActions {
   constructor() {
@@ -16,12 +17,27 @@ class DBActions {
     this.conn = null;
   }
 
+  async getProfileInfo (userID) {
+    try {
+      this.conn = await this.client.connect();
+      const collection = this.conn.db("tinder").collection("profiles");
+      const profileInfo = await collection.findOne(
+        {userID: userID},
+        {_id:0, passwordHash:0, userID:0})
+      return profileInfo;
+    } catch (error) {
+      console.log(error)
+      throw error
+    } finally {
+      this.conn && this.conn.close();
+    }
+  }
+
   async createAccount(sourceData) {
       try {
         this.conn = await this.client.connect();
         const collection = this.conn.db("tinder").collection("profiles");
         const profileData = sourceData;
-        //TODO poniższe fzwraca obiekt a nie string
         const passwordHash = crypto.createHash('sha256', sourceData.password).digest('hex'); // Nie przechowujemy jawnego hasła!!!
         delete profileData.password;
         profileData.passwordHash = passwordHash;
