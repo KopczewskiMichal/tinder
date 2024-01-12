@@ -46,11 +46,19 @@ export default function LoginDataForm () {
   
   return (
     <FormikContext.Provider value={formik}>
-      <form onSubmit={formik.handleSubmit}>
+      <form onSubmit={formik.handleSubmit}
+      className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+      >
         <FormInput name="email" type="email"/>
         <FormInput name="password" type="password"/>
-        <button type="reset">Reset</button>
-        <button type="submit">Submit</button>
+        <div
+        className="flex items-center justify-between">
+        <button type="reset"
+        className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Reset</button>
+        <button type="submit"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+        >Log In</button>
+        </div>
       </form>
     </FormikContext.Provider>
   )
