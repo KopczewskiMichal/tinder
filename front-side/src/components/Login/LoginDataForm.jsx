@@ -3,6 +3,7 @@ import FormInput from "./FormInput";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+// import Cookies from 'js-cookie';
 
 const FormikContext = createContext();
 
@@ -11,7 +12,13 @@ export const useFormikContext = () => {
 };
 
 export default function LoginDataForm() {
-  //TODO ciasteczko
+  const setCookie = (name, value, days) => {
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + days);
+    const cookieString = `${name}=${value}; expires=${expirationDate.toUTCString()}; path=/`;
+    document.cookie = cookieString;
+  };
+
 
   const formik = useFormik({
     initialValues: {
@@ -38,6 +45,7 @@ export default function LoginDataForm() {
         .post("http://localhost:8080/Login", values)
         .then(function (response) {
           alert(response.data);
+          setCookie('userID', response.data, 7);
         })
         .catch(function (error) {
           alert(error);
