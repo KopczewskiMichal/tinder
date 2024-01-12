@@ -2,6 +2,7 @@ import React, {createContext, useContext} from "react";
 import FormInput from "./FormInput";
 import {useFormik} from 'formik';
 import * as Yup from 'yup';
+import axios from "axios";
 
 const FormikContext = createContext();
 
@@ -10,10 +11,8 @@ export const useFormikContext = () => {
 };
 
 export default function LoginDataForm () {
-  // TODO handleSubmit
-  
-  
-  //TODO poprawić ten formularz
+  //TODO ciasteczko
+
   const formik = useFormik({
     initialValues: {
       email:"",
@@ -35,8 +34,13 @@ export default function LoginDataForm () {
       .required("Required"),
     }),
     onSubmit: values => {
-      // handleSubmit(values)
-      console.log("submit")
+      axios.post("http://localhost:8080/Login", values)
+      .then(function (response) {
+        alert(response.data)
+      })
+      .catch(function (error) {
+        alert(error)
+      });
     }
   });
   

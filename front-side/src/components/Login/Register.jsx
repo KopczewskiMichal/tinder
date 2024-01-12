@@ -74,7 +74,7 @@ export default function Register () {
         console.log(response);
       })
       .catch(function (error) {
-        alert(error)
+        alert("Nie udało sie utworzyć konta")
       });
     }
   });

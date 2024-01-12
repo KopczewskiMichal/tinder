@@ -16,7 +16,6 @@ app.get(("/test"), (req, res) => {
 })
 
 app.post(("/Register"), async (req, res)=> {
-
   try {
     const database = new DBActions();
     const existInDb = await database.isAccountInDB(req.body.email);
@@ -31,29 +30,23 @@ app.post(("/Register"), async (req, res)=> {
   }
 });
 
+app.post(("/Login"), async (req, res)=> {
+  try {
+    const database = new DBActions();
+    const userID = await database.login(req.body)
+    if (userID != null) {
+      console.log(userID)
+      res.send(userID)
+    } else {
+      res.status(500).send("Invalid data.")
+    }
+  } catch (error) {
+    res.status(500).send("Login failed.")
+  }
+});
 
 
 
-
-
-
-
-
-
-
-
-// app.post("/games/:id", (req, res) => {
-//   const id = req.params.id;
-//   const moveData = req.body; // pozycja spacja symbol
-//   const position = parseInt(moveData[0]);
-//   const symbol = moveData[2]
-//   if (games[id][position - 1] === " ") {
-//     games[id][position - 1] = symbol
-//     res.send(`${gameToBoardString(games[id])}\n`)
-//   } else {
-//     res.send(`Nie możesz w tym miejscu wykonać ruchu, nie jest ono puste\n${gameToBoardString(games[id])}\n`)
-//   }
-// })
 
 app.listen(PORT, () => {
   console.log(`Server running at: http://localhost:${PORT}/`);

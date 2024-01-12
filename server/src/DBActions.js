@@ -77,6 +77,26 @@ class DBActions {
       /[^\w]/.test(data.password) &&
       ["male", "female"].includes(data.sex)
     );
+  };
+
+  //String
+  async login (sourceData) {
+    try {
+      this.conn = await this.client.connect();
+      const collection = this.conn.db("tinder").collection("profiles");
+      const queryRes = await collection.findOne({email: sourceData.email})
+      const givenPasswordHash = crypto.createHash('sha256', sourceData.password).digest('hex');
+      console.log(queryRes)
+      if (queryRes != null && givenPasswordHash == queryRes.passwordHash)  {
+        return queryRes.userID
+      } else {
+        return null
+      }
+    } catch (error) {
+      throw error;
+    } finally {
+      this.conn && this.conn.close();
+    }
   }
   
 }
