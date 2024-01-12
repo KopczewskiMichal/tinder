@@ -4,6 +4,7 @@ import {useFormik} from 'formik';
 import * as Yup from 'yup';
 import SelectSex from "./SelectSex";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const FormikContext = createContext();
 
@@ -12,8 +13,7 @@ export const useFormikContext = () => {
 };
 
 export default function Register () {
-
-  // TODO obsługa zwrotu przez server informacji że podano nieprawidłowe dane
+  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -78,8 +78,15 @@ export default function Register () {
       });
     }
   });
+
+  const goToRegisterPage = () => {
+    navigate("/")
+  }
   
   return (
+  <div>
+    <button onClick={() => goToRegisterPage()}
+    >Login</button>
     <FormikContext.Provider value={formik}>
       <form onSubmit={formik.handleSubmit}>
         <CreateAccountInput name="email" type="email"/>
@@ -92,6 +99,7 @@ export default function Register () {
         <button type="submit">Submit</button>
       </form>
     </FormikContext.Provider>
+  </div>
   )
 
 }

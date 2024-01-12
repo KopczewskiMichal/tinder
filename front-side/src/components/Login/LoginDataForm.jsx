@@ -48,7 +48,7 @@ export default function LoginDataForm () {
     <FormikContext.Provider value={formik}>
       <form onSubmit={formik.handleSubmit}>
         <FormInput name="email" type="email"/>
-        <FormInput name="password" type="text"/>
+        <FormInput name="password" type="password"/>
         <button type="reset">Reset</button>
         <button type="submit">Submit</button>
       </form>
