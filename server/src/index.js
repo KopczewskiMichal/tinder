@@ -16,12 +16,11 @@ app.get(("/test"), (req, res) => {
 })
 
 app.post(("/Register"), async (req, res)=> {
-  // TODO Obsługa walidacji danych po stronie servera
 
   try {
     const database = new DBActions();
     const existInDb = await database.isAccountInDB(req.body.email);
-    if (!existInDb) {
+    if (database.validateForm(req.body) && !existInDb) {
       await database.createAccount(req.body);
       res.send("Utworzono konto")
     } else {

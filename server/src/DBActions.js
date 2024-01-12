@@ -52,6 +52,32 @@ class DBActions {
       this.conn && this.conn.close();
     }
   };
+
+  // boolean
+  validateForm(data) {
+    return (
+      !!data.email &&
+      /^.+@.+\..+$/.test(data.email) &&
+      data.email.length >= 1 &&
+      data.email.length <= 60 &&
+      !!data.name &&
+      data.name.length >= 1 &&
+      data.name.length <= 30 &&
+      !!data.surname &&
+      data.surname.length >= 1 &&
+      data.surname.length <= 60 &&
+      !!data.dateOfBirth &&
+      new Date(data.dateOfBirth) <= new Date(new Date().getFullYear() - 18, new Date().getMonth(), new Date().getDate()) &&
+      !!data.password &&
+      data.password.length >= 5 &&
+      data.password.length <= 100 &&
+      /[0-9]/.test(data.password) &&
+      /[a-z]/.test(data.password) &&
+      /[A-Z]/.test(data.password) &&
+      /[^\w]/.test(data.password) &&
+      ["male", "female"].includes(data.sex)
+    );
+  }
   
 }
 
