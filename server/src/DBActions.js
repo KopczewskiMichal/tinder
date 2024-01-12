@@ -86,7 +86,6 @@ class DBActions {
       const collection = this.conn.db("tinder").collection("profiles");
       const queryRes = await collection.findOne({email: sourceData.email})
       const givenPasswordHash = crypto.createHash('sha256', sourceData.password).digest('hex');
-      console.log(queryRes)
       if (queryRes != null && givenPasswordHash == queryRes.passwordHash)  {
         return queryRes.userID
       } else {

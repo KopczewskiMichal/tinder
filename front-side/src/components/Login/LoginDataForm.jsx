@@ -12,12 +12,14 @@ export const useFormikContext = () => {
 };
 
 export default function LoginDataForm() {
-  const setCookie = (name, value, days) => {
+
+  function setCookie (name, value, days) {
     const expirationDate = new Date();
     expirationDate.setDate(expirationDate.getDate() + days);
     const cookieString = `${name}=${value}; expires=${expirationDate.toUTCString()}; path=/`;
     document.cookie = cookieString;
   };
+  
 
 
   const formik = useFormik({

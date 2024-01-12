@@ -35,7 +35,6 @@ app.post(("/Login"), async (req, res)=> {
     const database = new DBActions();
     const userID = await database.login(req.body)
     if (userID != null) {
-      console.log(userID)
       res.send(userID)
     } else {
       res.status(500).send("Invalid data.")

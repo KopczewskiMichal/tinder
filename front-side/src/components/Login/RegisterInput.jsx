@@ -4,6 +4,20 @@ import { useFormikContext } from "./Register"; //Gdyby nie ten input można by u
 export default function RegisterInput({ name, type }) {
   const formik = useFormikContext();
 
+
+  function getCookie (name) {
+    const cookies = document.cookie.split(';');
+    const cookie = cookies.find(cookie => cookie.trim().startsWith(name + '='));
+    return cookie ? cookie.split('=')[1] : null;
+  };
+
+  function loginIfCookieExists () {
+    const userID = getCookie("userID");
+    if (userID != null) {
+      
+    }
+  } 
+
   return (
     <div>
       <label
