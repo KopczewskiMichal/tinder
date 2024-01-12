@@ -3,7 +3,7 @@ import FormInput from "./FormInput";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
-// import Cookies from 'js-cookie';
+import { useNavigate } from "react-router-dom";
 
 const FormikContext = createContext();
 
@@ -12,6 +12,7 @@ export const useFormikContext = () => {
 };
 
 export default function LoginDataForm() {
+  const navigate = useNavigate();
 
   function setCookie (name, value, days) {
     const expirationDate = new Date();
@@ -46,8 +47,8 @@ export default function LoginDataForm() {
       axios
         .post("http://localhost:8080/Login", values)
         .then(function (response) {
-          alert(response.data);
           setCookie('userID', response.data, 7);
+          navigate("/mainPage")
         })
         .catch(function (error) {
           alert(error);

@@ -2,7 +2,6 @@
 import React, {useEffect} from "react";
 import LoginDataForm from "./LoginDataForm";
 import { useNavigate } from "react-router-dom";
-import { get } from "lodash";
 
 
 export default function LoginPage () {
