@@ -3,6 +3,7 @@ import React, { createContext, useContext } from "react";
 import { useFormikContext } from "./FormikContextProvider";
 import EditProfileInput from "./EditProfileInput";
 import SelectLookingFor from "./SelectLookingFor";
+import EditProfilePage from "./EditProfilePage";
 
 export default function EditProfileForm() {
   const formik = useFormikContext();
@@ -13,13 +14,16 @@ export default function EditProfileForm() {
         onSubmit={formik.handleSubmit}
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
       >
-        <EditProfileInput name={"name"} type={"text"} />
-        <EditProfileInput name={"surname"} type={"text"} />
+        <EditProfileInput name={"name"} />
+        <EditProfileInput name={"surname"} />
         <EditProfileInput name={"email"} type={"email"} />
         <EditProfileInput name={"height"} type={"number"} />
-        <EditProfileInput name={"degree"} type={"text"} />
-        <EditProfileInput name={"city"} type={"text"} />
+        <EditProfileInput name={"degree"} />
+        <EditProfileInput name={"city"} />
         <SelectLookingFor />
+        <EditProfileInput name='AboutMe' type='textarea'/>
+        <EditProfileInput name='image' />
+        
 
         <button
           type="reset"

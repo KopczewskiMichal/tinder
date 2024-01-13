@@ -16,10 +16,12 @@ export default function FormikContextProvider({ children }) {
     photos: [],
     birtDate: new Date("01-01-1970"),
     height: 0,
-    interests: [],
+    interests: ["rolki", "Piłka"],
     degree: "",
     city: "",
     lookingFor: "",
+    AboutMe:"",
+    image:""
   };
 
   const [actUserData, setActUserData] = useState({});
