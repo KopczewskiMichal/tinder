@@ -46,7 +46,16 @@ app.post(("/Register"), async (req, res)=> {
   }
 });
 
-// app.
+app.put(('/updateProfile'), async (req, res) => {
+  try {
+  const database = new DBActions();
+  await database.updateProfile(req.body);
+  res.send("Succes")
+  } catch (error) {
+    res.status(500).send(error)
+  } 
+
+})
 
 app.post(("/Login"), async (req, res)=> {
   try {

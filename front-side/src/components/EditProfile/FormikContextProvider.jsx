@@ -90,7 +90,11 @@ export default function FormikContextProvider({ children }) {
         .required("Required"),
       }),
       onSubmit: (values) => {
-        console.log(values)
+        axios.put('http://127.0.0.1:8080/updateProfile', {userID: userID, ...values})
+        .then((res) => {
+          // console.log(res)
+        })
+        .catch((err) => console.log(err))
       },
     }
     
