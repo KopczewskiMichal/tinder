@@ -20,7 +20,7 @@ export default function SelectLookingFor() {
         name="lookingFor"
         onChange={formik.handleChange}
         onBlur={formik.handleBlur}
-        value={formik.values.lookingFor}
+        value={formik.values.lookingFoor}
       >
         {options.map((option) => (
           <option key={option} value={option}>

@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { Formik, useFormik } from "formik";
+import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 
@@ -13,16 +13,16 @@ export default function FormikContextProvider({ children }) {
   const emptyUserData = {
     name: "",
     surname: "",
-    photos: [],
-    birtDate: new Date("01-01-1970"),
+    email: "",
+    dateOfBirth: new Date("01/01/1970"),
     height: 0,
-    interests: ["rolki", "Piłka"],
     degree: "",
     city: "",
     lookingFor: "",
-    AboutMe:"",
+    aboutMe:"",
     image:""
   };
+
 
   const [actUserData, setActUserData] = useState({});
 
@@ -40,6 +40,7 @@ export default function FormikContextProvider({ children }) {
     axios
       .get(`http://localhost:8080/profiles/${userID}`)
       .then((res) => {
+        console.log(res.data)
         const updatedUserData = { ...emptyUserData, ...res.data };
         setActUserData(updatedUserData);
         formik.setValues(updatedUserData);
@@ -55,30 +56,46 @@ export default function FormikContextProvider({ children }) {
 
   const formik = useFormik(
     {
-      initialValues: { ...actUserData },
+      initialValues: emptyUserData,
     },
     {
       validationSchema: Yup.object().shape({
         name: Yup.string().required("Name is required"),
         surname: Yup.string().required("Surname is required"),
-        photos: Yup.array().of(Yup.string().max(300, "It is too long")),
-        birthDate: Yup.date(),
+        image: Yup.array().of(Yup.string().max(300, "It is too long")),
+        dateOfBirth: Yup.date()
+        .max(new Date(), "Date of birth cannot be in the future")
+        .test(
+          "is-adult",
+          "You must be at least 18 years old",
+          function (value) {
+            const today = new Date();
+            const minimumAgeDate = new Date(
+              today.getFullYear() - 18,
+              today.getMonth(),
+              today.getDate()
+            );
+            return value <= minimumAgeDate;
+          }
+        )
+        .required("Date of birth is required"),
         height: Yup.number()
           .min(100, "If Your height is too small, you are child")
           .max(250, "It is impossible to be higher than 250cm"),
-        interests: Yup.array().of(
-          Yup.string().max(50, "Your intersts is too long")
-        ),
         degree: Yup.string().max(100),
         city: Yup.string().max(50, "It is too long"),
         lookingFor: Yup.string(),
+        email: Yup.string()
+        .email("Incorrect email")
+        .min(1, "Must be at least 1 character")
+        .max(60, "Must be max 60 characters")
+        .required("Required"),
       }),
       onSubmit: (values) => {
-        // TODO post na server
-        console.log(values);
       },
     }
-  );
+    
+    );
 
   return (
     <FormikContext.Provider value={formik}>{children}</FormikContext.Provider>

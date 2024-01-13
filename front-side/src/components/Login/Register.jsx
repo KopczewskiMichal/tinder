@@ -53,7 +53,6 @@ export default function Register() {
               today.getMonth(),
               today.getDate()
             );
-
             return value <= minimumAgeDate;
           }
         )
