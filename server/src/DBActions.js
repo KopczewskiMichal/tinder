@@ -22,8 +22,8 @@ class DBActions {
       this.conn = await this.client.connect();
       const collection = this.conn.db("tinder").collection("profiles");
       const profileInfo = await collection.findOne(
-        {userID: userID},
-        {_id:0, passwordHash:0, userID:0})
+        { userID: userID },
+        {projection: { _id: 0, passwordHash: 0, userID: 0 },});
       return profileInfo;
     } catch (error) {
       console.log(error)
