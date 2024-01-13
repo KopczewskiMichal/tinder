@@ -4,6 +4,7 @@ import React from "react";
 import LoginPage from './components/Login/LoginPage';
 import Register from './components/Login/Register';
 import MainPage from './components/mainPage/mainPage';
+import EditProfilePage from './components/EditProfile/EditProfilePage';
 
 function App() {
   return (
@@ -22,6 +23,11 @@ function App() {
           path='/MainPage'
           element={<MainPage />}
           ></Route>
+          <Route
+          path='/edit-profile'
+          element={<EditProfilePage />}
+          >
+          </Route>
         </Routes>
       </BrowserRouter>
     </div>

@@ -2,13 +2,12 @@ Plik zawiera możliwe WIDOCZNE DLA UŻYTKOWNIA pola w profilu.
 
 Imie
 Nazwisko
+email
 Zdjęcia [] z możliwością zmiany kolejności w procesie edycji (Strzałkami)
-Wiek
+Wiek (Wyświetlamy same lata ale w bazie trzymamy jako rok urodzenia)
 wzrost
 Województwo
-Jak często pijesz []
-Jak często palisz []
 Zainteresowania [tablica]
-Wykształcenie 
+Wykształcenie [Do wybrania z listy]
 Szukam: [miłość/przelotna zabawa/znajomych /jeszcze nwm]
 

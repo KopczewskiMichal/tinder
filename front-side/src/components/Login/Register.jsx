@@ -69,7 +69,7 @@ export default function Register() {
         .required("Required"),
 
       sex: Yup.string()
-        .oneOf(["male", "female"], "Invalid option")
+        .oneOf(["male", "female"], "There are only two genders")
         .required("Podaj swoją płeć"),
     }),
     onSubmit: (values) => {
