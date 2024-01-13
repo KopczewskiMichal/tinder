@@ -8,23 +8,23 @@ const FormikContext = createContext();
 export const useFormikContext = () => {
   return useContext(FormikContext);
 };
+export const emptyUserData = {
+  name: "",
+  surname: "",
+  email: "",
+  dateOfBirth: new Date("01/01/1970"),
+  height: 0,
+  degree: "",
+  city: "",
+  lookingFor: "",
+  aboutMe:"",
+  image:""
+};
 
 export default function FormikContextProvider({ children }) {
-  const emptyUserData = {
-    name: "",
-    surname: "",
-    email: "",
-    dateOfBirth: new Date("01/01/1970"),
-    height: 0,
-    degree: "",
-    city: "",
-    lookingFor: "",
-    aboutMe:"",
-    image:""
-  };
 
 
-  const [actUserData, setActUserData] = useState({});
+  const [actUserData, setActUserData] = useState(emptyUserData);
 
   const getCookie = (name) => {
     const cookies = document.cookie.split(";");
@@ -40,7 +40,6 @@ export default function FormikContextProvider({ children }) {
     axios
       .get(`http://localhost:8080/profiles/${userID}`)
       .then((res) => {
-        console.log(res.data)
         const updatedUserData = { ...emptyUserData, ...res.data };
         setActUserData(updatedUserData);
         formik.setValues(updatedUserData);
@@ -56,9 +55,8 @@ export default function FormikContextProvider({ children }) {
 
   const formik = useFormik(
     {
-      initialValues: emptyUserData,
-    },
-    {
+      initialValues: actUserData,
+ 
       validationSchema: Yup.object().shape({
         name: Yup.string().required("Name is required"),
         surname: Yup.string().required("Surname is required"),
@@ -92,6 +90,7 @@ export default function FormikContextProvider({ children }) {
         .required("Required"),
       }),
       onSubmit: (values) => {
+        console.log(values)
       },
     }
     
