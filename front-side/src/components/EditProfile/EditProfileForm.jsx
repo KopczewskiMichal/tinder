@@ -11,7 +11,6 @@ export default function EditProfileForm() {
 
 
   return (
-    <div>
       <form
         onSubmit={formik.handleSubmit}
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
@@ -42,6 +41,5 @@ export default function EditProfileForm() {
           Apply changes
         </button>
       </form>
-    </div>
   );
 }

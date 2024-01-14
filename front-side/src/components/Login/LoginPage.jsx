@@ -30,7 +30,7 @@ export default function LoginPage () {
 
   return (
     <div
-    className="form-component w-full max-w-xs">
+    className="login-component w-full max-w-xs">
       <button
       className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded"
       onClick={()=> goToRegisterPage()}

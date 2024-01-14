@@ -60,7 +60,7 @@ export default function FormikContextProvider({ children }) {
       validationSchema: Yup.object().shape({
         name: Yup.string().required("Name is required"),
         surname: Yup.string().required("Surname is required"),
-        image: Yup.array().of(Yup.string().max(300, "It is too long")),
+        image: Yup.string().max(300, "It is too long"),
         dateOfBirth: Yup.date()
         .max(new Date(), "Date of birth cannot be in the future")
         .test(
