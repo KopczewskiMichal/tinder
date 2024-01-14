@@ -5,7 +5,10 @@
 const { MongoClient } = require("mongodb");
 const { v4: uuidv4 } = require("uuid");
 const crypto = require("crypto");
-const { error } = require("console");
+const { resolve } = require("path");
+const { reject } = require("lodash");
+const { query } = require("express");
+// const { error } = require("console");
 
 class DBActions {
   constructor() {
@@ -141,6 +144,58 @@ class DBActions {
     } finally {
       this.conn && this.conn.close();
     }
+  }
+
+  getUsrPreferences(userID) {
+    return new Promise((resolve, reject) => {
+      this.client
+        .connect()
+        .then((conn) => {
+          this.conn = conn;
+          const collection = this.conn.db("tinder").collection("profiles");
+          return collection
+            .aggregate([
+              {
+                $match: { userID: userID },
+              },
+              { $limit: 1 },
+              // {
+              //   $project: {
+              //     _id: 0,
+              //     dateOfBirth: 1,
+              //   },
+              // },
+              {
+                $addFields: {
+                  age: {
+                    $subtract: [
+                      { $year: new Date() },
+                      { $year: new Date("$dateOfBirth") },
+                    ],
+                  },
+                },
+              },
+              {$project: {_id:0, age:1, sex:1}}
+            ])
+            .toArray();
+        })
+        .then((queryRes) => {
+          if (queryRes != null) {
+            console.log(queryRes)
+            resolve(queryRes);
+          } else {
+            reject("User doesn't exist in db");
+          }
+        })
+        .catch((error) => {
+          reject(error);
+        })
+        .finally(() => {
+          if (this.conn) {
+            this.conn.close();
+          }
+        });
+    });
   }
 }
 

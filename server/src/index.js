@@ -72,6 +72,20 @@ app.post(("/Login"), async (req, res)=> {
 });
 
 
+// * Inne niż CRUD i promise
+app.get(("/candidatesFor/:userID"), async (req, res) => {
+  try {
+    const userID = req.params.userID
+    const database = new DBActions();
+    const response = await database.getUsrPreferences(userID) // ? Zrób to na promise
+    res.send(response)
+  } catch (error) {
+    console.error(error)
+    res.status(500).send("Ooops, we have some problems")
+  }
+})
+
+
 
 
 app.listen(PORT, () => {

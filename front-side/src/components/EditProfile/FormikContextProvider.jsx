@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
@@ -26,15 +27,7 @@ export default function FormikContextProvider({ children }) {
 
   const [actUserData, setActUserData] = useState(emptyUserData);
 
-  const getCookie = (name) => {
-    const cookies = document.cookie.split(";");
-    const cookie = cookies.find((cookie) =>
-      cookie.trim().startsWith(name + "=")
-    );
-    return cookie ? cookie.split("=")[1] : null;
-  };
-
-  const userID = getCookie("userID");
+  const {userID} = useParams();
 
   function getUserData() {
     axios

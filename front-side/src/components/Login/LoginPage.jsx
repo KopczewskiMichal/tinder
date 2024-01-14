@@ -1,4 +1,3 @@
-// import LoginForm from "./LoginForm";
 import React, {useEffect} from "react";
 import LoginDataForm from "./LoginDataForm";
 import { useNavigate } from "react-router-dom";
@@ -21,7 +20,7 @@ export default function LoginPage () {
     function loginIfCookieExists() {
       const userID = getCookie("userID");
       if (userID != null) {
-        navigate("/mainPage");
+        navigate(`/mainPage/${userID}`);
       }
     }
 

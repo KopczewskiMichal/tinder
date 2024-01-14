@@ -1,12 +1,13 @@
 import React from "react";
 import LogOut from "../Login/LogOut";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 
 export default function MainPage () {
+  const { userID } = useParams();
   const navigate = useNavigate();
   const navigateToEditProfile = () => {
-    navigate("/edit-profile")
+    navigate(`/edit-profile/${userID}`)
   }
 
   return (

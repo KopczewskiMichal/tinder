@@ -20,11 +20,11 @@ function App() {
             element={<Register />}
           ></Route>
           <Route
-          path='/MainPage'
+          path='/MainPage/:userID'
           element={<MainPage />}
           ></Route>
           <Route
-          path='/edit-profile'
+          path='/edit-profile/:userID'
           element={<EditProfilePage />}
           >
           </Route>

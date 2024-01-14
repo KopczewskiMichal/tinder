@@ -1,14 +1,16 @@
 import React from "react";
 import EditProfileForm from "./EditProfileForm";
 import LogOut from "../Login/LogOut";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import FormikContextProvider from "./FormikContextProvider";
 import ProfilePhoto from "./ProfilePhoto";
 
+
 export default function EditProfilePage() {
+  const { userID } = useParams();
   const navigate = useNavigate();
   const navigateToMainPage = () => {
-    navigate("/MainPage");
+    navigate(`/MainPage/${userID}`);
   };
 
   return (
