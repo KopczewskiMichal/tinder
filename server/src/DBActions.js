@@ -180,8 +180,7 @@ class DBActions {
             .toArray();
         })
         .then((queryRes) => {
-          if (queryRes != null) {
-            console.log(queryRes)
+          if (queryRes.length == 1) {
             resolve(queryRes);
           } else {
             reject("User doesn't exist in db");
