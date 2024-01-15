@@ -15,6 +15,13 @@ export const useFormikContext = () => {
 export default function Register() {
   const navigate = useNavigate();
 
+  function setCookie(name, value, days) {
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + days);
+    const cookieString = `${name}=${value}; expires=${expirationDate.toUTCString()}; path=/`;
+    document.cookie = cookieString;
+  }
+
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -75,7 +82,8 @@ export default function Register() {
       axios
         .post("http://localhost:8080/Register", values)
         .then(function (response) {
-          console.log(response);
+          setCookie("userID", response.data, 30)
+          navigate(`/mainPage/${response.data}`)
         })
         .catch(function (error) {
           alert("Nie udało sie utworzyć konta");

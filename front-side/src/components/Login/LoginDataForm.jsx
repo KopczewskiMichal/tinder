@@ -46,7 +46,7 @@ export default function LoginDataForm() {
         .post("http://localhost:8080/Login", values)
         .then(function (response) {
           setCookie("userID", response.data, 7);
-          navigate("/mainPage");
+          navigate(`/mainPage/${response.data}`);
         })
         .catch(function (error) {
           alert(error);
