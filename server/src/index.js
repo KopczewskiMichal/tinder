@@ -36,8 +36,8 @@ app.post(("/Register"), async (req, res)=> {
     const database = new DBActions();
     const existInDb = await database.isAccountInDB(req.body.email);
     if (database.validateForm(req.body) && !existInDb) {
-      await database.createAccount(req.body);
-      res.send("Utworzono konto")
+      const userID = await database.createAccount(req.body);
+      res.send(userID)
     } else {
       res.status(500).send("Account with this email exist.")
     }
@@ -57,6 +57,7 @@ app.put(('/updateProfile'), async (req, res) => {
 
 })
 
+//* Nie CRUD
 app.post(("/Login"), async (req, res)=> {
   try {
     const database = new DBActions();
@@ -77,7 +78,7 @@ app.get(("/candidatesFor/:userID"), async (req, res) => {
   try {
     const userID = req.params.userID
     const database = new DBActions();
-    const response = await database.getUsrPreferences(userID) // ? Zrób to na promise
+    const response = await database.getCandidates(userID) // ? Zrób to na promise
     res.send(response)
   } catch (error) {
     console.error(error)

@@ -8,6 +8,7 @@ const crypto = require("crypto");
 const { resolve } = require("path");
 const { reject } = require("lodash");
 const { query } = require("express");
+const { profileEnd } = require("console");
 // const { error } = require("console");
 
 class DBActions {
@@ -26,7 +27,15 @@ class DBActions {
       const collection = this.conn.db("tinder").collection("profiles");
       const profileInfo = await collection.findOne(
         { userID: userID },
-        { projection: { _id: 0, passwordHash: 0, userID: 0 } }
+        {
+          projection: {
+            _id: 0,
+            passwordHash: 0,
+            userID: 0,
+            receivedNegative: 0,
+            receivedPositive: 0,
+          },
+        }
       );
       return profileInfo;
     } catch (error) {
@@ -67,7 +76,10 @@ class DBActions {
       delete profileData.password;
       profileData.passwordHash = passwordHash;
       profileData.userID = uuidv4();
+      profileData.receivedPositive = 0;
+      profileData.receivedNegative = 0;
       await collection.insertOne(profileData);
+      return profileData.userID;
     } catch (error) {
       console.error("Błąd podczas tworzenia konta: ", error);
       throw error;
@@ -146,7 +158,7 @@ class DBActions {
     }
   }
 
-  getUsrPreferences(userID) {
+  getCandidates(userID) {
     return new Promise((resolve, reject) => {
       this.client
         .connect()
@@ -159,12 +171,6 @@ class DBActions {
                 $match: { userID: userID },
               },
               { $limit: 1 },
-              // {
-              //   $project: {
-              //     _id: 0,
-              //     dateOfBirth: 1,
-              //   },
-              // },
               {
                 $addFields: {
                   age: {
@@ -175,16 +181,79 @@ class DBActions {
                   },
                 },
               },
-              {$project: {_id:0, age:1, sex:1}}
+              { $project: { _id: 0, age: 1, sex: 1 } },
             ])
             .toArray();
         })
+        // TODO zapytanie do bazy matchy czy już nie dopasowało tej osoby
+        // TODO Podzielić metodę w tym miejscu na 2
         .then((queryRes) => {
           if (queryRes.length == 1) {
-            resolve(queryRes);
+            queryRes = queryRes[0]
+            const collection = this.conn.db("tinder").collection("profiles");
+            return collection
+              .aggregate([
+                {
+                  $match: {
+                    sex: {
+                      $ne: 
+                      queryRes.sex
+                    },
+                  },
+                },
+                {
+                  $addFields: {
+                    age: {
+                      $subtract: [
+                        { $year: new Date() },
+                        { $year: new Date("$dateOfBirth") },
+                      ],
+                    },
+                    ageDiff: {
+                      $abs: {
+                        $subtract: [
+                          new Date(queryRes.dateOfBirth),
+                          new Date("$dateOfBirth"),
+                        ],
+                      },
+                    },
+                    stats: {
+                      $cond: {
+                        if: { $eq: ["$receivedNegative", 0] },
+                        then: 0, 
+                        else: { $divide: ["$receivedPositive", "$receivedNegative"] }
+                      }
+                    }
+                  },
+                },
+                {
+                  $sort: {
+                    // TODO sortowanie po wynikach u innych
+                    ageDiff: -1,
+                    stats: -1,
+                  },
+                },
+                { $limit: 50 },
+
+                {
+                  $project: {
+                    _id: 0,
+                    passwordHash: 0,
+                    email: 0,
+                    dateOfBirth: 0,
+                    receivedNegative: 0,
+                    receivedPositive: 0,
+                    stats: 0,
+                  },
+                },
+              ])
+              .toArray();
           } else {
             reject("User doesn't exist in db");
           }
+        })
+        .then((candidates) => {
+          resolve(candidates);
         })
         .catch((error) => {
           reject(error);
