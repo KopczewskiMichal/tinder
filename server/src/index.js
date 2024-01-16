@@ -78,7 +78,31 @@ app.put("/updateProfile", async (req, res) => {
     await updateValidationSchema.validate(req.body);  // Nie trzeba if, to po prostu rzuca błędem więc zapytanie nie przechodzi
     const database = new DBActions();
 
-    await database.updateProfile(req.body);
+    let dataToUpdate = req.body;
+    let keysToRemove = {};
+
+    const emptyUserData = {
+      name: "",
+      surname: "",
+      email: "",
+      dateOfBirth: new Date("01/01/1970"),
+      height: 100,
+      degree: "",
+      city: "",
+      lookingFor: "",
+      aboutMe:"",
+      image:""
+    };
+
+    Object.keys(req.body).forEach((key) => {
+      if (emptyUserData.hasOwnProperty(key) && emptyUserData[key] === req.body[key]) {
+        delete dataToUpdate[key]
+        keysToRemove[key] = null
+      }
+    });
+
+
+    await database.updateProfile(dataToUpdate, keysToRemove);
     res.send("Succes");
   } catch (error) {
     res.status(500).send(error);

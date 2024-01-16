@@ -37,7 +37,7 @@ class DBActions {
     }
   }
 
-  async updateProfile(data) {
+  async updateProfile(data, keysToRemove) {
     try {
       this.conn = await this.client.connect();
       const collection = this.conn.db("tinder").collection("profiles");
@@ -45,6 +45,7 @@ class DBActions {
         { userID: data.userID },
         {
           $set: data,
+          $unset: keysToRemove
         }
       );
     } catch (error) {
