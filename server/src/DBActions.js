@@ -1,15 +1,7 @@
-// import { createRequire } from 'module';
-
-// const require = createRequire(import.meta.url);
-
 const { MongoClient } = require("mongodb");
 const { v4: uuidv4 } = require("uuid");
 const crypto = require("crypto");
-const { resolve } = require("path");
-const { reject } = require("lodash");
-const { query } = require("express");
-const { profileEnd } = require("console");
-// const { error } = require("console");
+
 
 class DBActions {
   constructor() {
@@ -158,7 +150,8 @@ class DBActions {
     }
   }
 
-  getCandidates(userID) {
+  //object
+  getUserInfo(userID) {
     return new Promise((resolve, reject) => {
       this.client
         .connect()
@@ -185,75 +178,8 @@ class DBActions {
             ])
             .toArray();
         })
-        // TODO zapytanie do bazy matchy czy już nie dopasowało tej osoby
-        // TODO Podzielić metodę w tym miejscu na 2
-        .then((queryRes) => {
-          if (queryRes.length == 1) {
-            queryRes = queryRes[0]
-            const collection = this.conn.db("tinder").collection("profiles");
-            return collection
-              .aggregate([
-                {
-                  $match: {
-                    sex: {
-                      $ne: 
-                      queryRes.sex
-                    },
-                  },
-                },
-                {
-                  $addFields: {
-                    age: {
-                      $subtract: [
-                        { $year: new Date() },
-                        { $year: new Date("$dateOfBirth") },
-                      ],
-                    },
-                    ageDiff: {
-                      $abs: {
-                        $subtract: [
-                          new Date(queryRes.dateOfBirth),
-                          new Date("$dateOfBirth"),
-                        ],
-                      },
-                    },
-                    stats: {
-                      $cond: {
-                        if: { $eq: ["$receivedNegative", 0] },
-                        then: 0, 
-                        else: { $divide: ["$receivedPositive", "$receivedNegative"] }
-                      }
-                    }
-                  },
-                },
-                {
-                  $sort: {
-                    // TODO sortowanie po wynikach u innych
-                    ageDiff: -1,
-                    stats: -1,
-                  },
-                },
-                { $limit: 50 },
-
-                {
-                  $project: {
-                    _id: 0,
-                    passwordHash: 0,
-                    email: 0,
-                    dateOfBirth: 0,
-                    receivedNegative: 0,
-                    receivedPositive: 0,
-                    stats: 0,
-                  },
-                },
-              ])
-              .toArray();
-          } else {
-            reject("User doesn't exist in db");
-          }
-        })
-        .then((candidates) => {
-          resolve(candidates);
+        .then((preferences) => {
+          resolve(preferences);
         })
         .catch((error) => {
           reject(error);
@@ -265,6 +191,123 @@ class DBActions {
         });
     });
   }
+
+  getRelatedWith(userID) {
+    return new Promise((resolve, reject) => {
+      this.client.connect().then((conn) => {
+        this.conn = conn;
+        const collection = this.conn.db("tinder").collection("relations");
+         return collection.aggregate([
+          {
+            $match: {
+              users: { $elemMatch: {$eq: userID}  },
+            },
+          },
+          {
+            $project: {
+              _id: 0,
+              users: {
+                $setDifference: ["$users", [userID]]
+              }
+            },
+          },
+        ]).toArray()
+      })
+      .then((resArr) => {
+        const res = resArr.map((elem) => elem.users[0])
+        resolve(res)})
+      .catch((error) => reject(error))
+      .finally(() => {
+        if (this.conn) {
+          this.conn.close();
+        };
+      });
+    });
+  };
+
+  getCandidates(userInfo, relatedUsers) {
+    return new Promise((resolve, reject) => {
+      this.client.connect()
+      .then((conn) => {
+        userInfo = userInfo[0]
+        this.conn = conn;
+        const collection = this.conn.db("tinder").collection("profiles");
+        return collection
+          .aggregate([
+            {
+              $match: {
+                sex: {
+                  $ne: userInfo.sex,
+                },
+                userID: {
+                  $not: {
+                    $in: relatedUsers
+                  }
+                }
+              },
+            },
+            {
+              $addFields: {
+                age: {
+                  $subtract: [
+                    { $year: new Date() },
+                    { $year: new Date("$dateOfBirth") },
+                  ],
+                },
+                ageDiff: {
+                  $abs: {
+                    $subtract: [
+                      new Date(userInfo.dateOfBirth),
+                      new Date("$dateOfBirth"),
+                    ],
+                  },
+                },
+                stats: {
+                  $cond: {
+                    if: { $eq: ["$receivedNegative", 0] },
+                    then: "$receivedPositive",
+                    else: {
+                      $divide: ["$receivedPositive", "$receivedNegative"],
+                    },
+                  },
+                },
+              },
+            },
+            {
+              $sort: {
+                ageDiff: 1,
+                stats: -1,
+              },
+            },
+            { $limit: 50 },
+
+            {
+              $project: {
+                _id: 0,
+                passwordHash: 0,
+                email: 0,
+                dateOfBirth: 0,
+                receivedNegative: 0,
+                receivedPositive: 0,
+                stats: 0,
+                ageDiff: 0
+              },
+            },
+          ])
+          .toArray()
+      .then((candidates) => {
+        resolve(candidates);
+      })
+      .catch((error) => {
+        reject(error);
+      })
+      .finally(() => {
+        if (this.conn) {
+          this.conn.close();
+        }
+      });
+  })
+})}
 }
 
 module.exports = DBActions;
