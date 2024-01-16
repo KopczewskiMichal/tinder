@@ -18,12 +18,12 @@ export default function ProfileTile({ profileData = null }) {
         <h2>{profileData.age}</h2>
         <h3>{profileData.surname}</h3>
         {/* // TODO zamienić undefined na puste stringi */}
-        {profileData.city != undefined ? (<div><span>City: </span><span>{profileData.city}</span></div>) : null}
-        {profileData.degree != undefined ? (<div><span>Degree: </span><span>{profileData.degree}</span></div>) : null}
-        {profileData.height != undefined ? (<div><span>Height: </span><span>{profileData.height}</span></div>) : null}
-        {profileData.lookingFor != undefined ? (<div><span>Looking For: </span><span>{profileData.lookingFor}</span></div>) : null}
-        {profileData.aboutMe != undefined ? (<div><span>About Me: </span><span>{profileData.aboutMe}</span></div>) : null}
-        {profileData.image != undefined ? (<ProfilePhoto src={profileData.image}/>) : null}
+        {profileData.city !== undefined ? (<div><span>City: </span><span>{profileData.city}</span></div>) : null}
+        {profileData.degree !== undefined ? (<div><span>Degree: </span><span>{profileData.degree}</span></div>) : null}
+        {profileData.height !==undefined ? (<div><span>Height: </span><span>{profileData.height}</span></div>) : null}
+        {profileData.lookingFor !== undefined ? (<div><span>Looking For: </span><span>{profileData.lookingFor}</span></div>) : null}
+        {profileData.aboutMe !== undefined ? (<div><span>About Me: </span><span>{profileData.aboutMe}</span></div>) : null}
+        {profileData.image !== undefined ? (<ProfilePhoto src={profileData.image}/>) : null}
         
       </div>
     );

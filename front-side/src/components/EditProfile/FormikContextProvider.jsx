@@ -14,7 +14,7 @@ export const emptyUserData = {
   surname: "",
   email: "",
   dateOfBirth: new Date("01/01/1970"),
-  height: 0,
+  height: 100,
   degree: "",
   city: "",
   lookingFor: "",
@@ -26,6 +26,7 @@ export default function FormikContextProvider({ children }) {
 
 
   const [actUserData, setActUserData] = useState(emptyUserData);
+
 
   const {userID} = useParams();
 
@@ -75,7 +76,7 @@ export default function FormikContextProvider({ children }) {
           .max(250, "It is impossible to be higher than 250cm"),
         degree: Yup.string().max(100),
         city: Yup.string().max(50, "It is too long"),
-        lookingFor: Yup.string(),
+        lookingFor: Yup.string().oneOf(["Long Relationship", "Frends", "FWB", "I don't know"], "Invalid option"),
         email: Yup.string()
         .email("Incorrect email")
         .min(1, "Must be at least 1 character")
@@ -87,7 +88,7 @@ export default function FormikContextProvider({ children }) {
         .then((res) => {
           // console.log(res)
         })
-        .catch((err) => console.log(err))
+        .catch((err) => alert(err))
       },
     }
     

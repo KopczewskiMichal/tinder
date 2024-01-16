@@ -39,7 +39,6 @@ class DBActions {
 
   async updateProfile(data) {
     try {
-      //TODO wywalić pierwsze 2 linie do konstruktora
       this.conn = await this.client.connect();
       const collection = this.conn.db("tinder").collection("profiles");
       await collection.updateOne(

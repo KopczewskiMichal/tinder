@@ -4,15 +4,43 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const app = express();
 const cors = require("cors");
-const e = require("express");
 app.use(cors());
 app.use(express.text({ type: "text/*" }));
 const PORT = 8080;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+const Yup = require("yup");
 
-app.get("/test", (req, res) => {
-  res.send("Server nasłuchuje...");
+const updateValidationSchema = Yup.object().shape({
+  name: Yup.string().required("Name is required"),
+  surname: Yup.string().required("Surname is required"),
+  image: Yup.string().max(300, "It is too long"),
+  dateOfBirth: Yup.date()
+    .max(new Date(), "Date of birth cannot be in the future")
+    .test("is-adult", "You must be at least 18 years old", function (value) {
+      const today = new Date();
+      const minimumAgeDate = new Date(
+        today.getFullYear() - 18,
+        today.getMonth(),
+        today.getDate()
+      );
+      return value <= minimumAgeDate;
+    })
+    .required("Date of birth is required"),
+  height: Yup.number()
+    .min(100, "If Your height is too small, you are child")
+    .max(250, "It is impossible to be higher than 250cm"),
+  degree: Yup.string().max(100),
+  city: Yup.string().max(50, "It is too long"),
+  lookingFor: Yup.string().oneOf(
+    ["Long Relationship", "Frends", "FWB", "I don't know"],
+    "Invalid option"
+  ),
+  email: Yup.string()
+    .email("Incorrect email")
+    .min(1, "Must be at least 1 character")
+    .max(60, "Must be max 60 characters")
+    .required("Required"),
 });
 
 app.get("/profiles/:id", async (req, res) => {
@@ -47,11 +75,14 @@ app.post("/Register", async (req, res) => {
 
 app.put("/updateProfile", async (req, res) => {
   try {
+    await updateValidationSchema.validate(req.body);  // Nie trzeba if, to po prostu rzuca błędem więc zapytanie nie przechodzi
     const database = new DBActions();
+
     await database.updateProfile(req.body);
     res.send("Succes");
   } catch (error) {
     res.status(500).send(error);
+    console.error(error)
   }
 });
 
@@ -81,12 +112,12 @@ app.get("/candidatesFor/:userID", (req, res) => {
       let database = new DBActions();
       return database.getUserInfo(userID).then((userInfo) => {
         let database = new DBActions();
-        return database.getCandidates(userInfo, relatedUsers)
+        return database
+          .getCandidates(userInfo, relatedUsers)
           .then((candidates) => {
             res.send(candidates);
           })
           .catch((error) => {
-            console.log("Napotkano na problemy z pobraniem kandydatów")
             res.status(500).send(error);
           });
       });
