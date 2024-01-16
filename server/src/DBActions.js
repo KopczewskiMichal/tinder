@@ -2,7 +2,6 @@ const { MongoClient } = require("mongodb");
 const { v4: uuidv4 } = require("uuid");
 const crypto = require("crypto");
 
-
 class DBActions {
   constructor() {
     const ipAdress = "127.0.0.1";
@@ -194,42 +193,46 @@ class DBActions {
 
   getRelatedWith(userID) {
     return new Promise((resolve, reject) => {
-      this.client.connect().then((conn) => {
-        this.conn = conn;
-        const collection = this.conn.db("tinder").collection("relations");
-         return collection.aggregate([
-          {
-            $match: {
-              users: { $elemMatch: {$eq: userID}  },
-            },
-          },
-          {
-            $project: {
-              _id: 0,
-              users: {
-                $setDifference: ["$users", [userID]]
-              }
-            },
-          },
-        ]).toArray()
-      })
-      .then((resArr) => {
-        const res = resArr.map((elem) => elem.users[0])
-        resolve(res)})
-      .catch((error) => reject(error))
-      .finally(() => {
-        if (this.conn) {
-          this.conn.close();
-        };
-      });
+      this.client
+        .connect()
+        .then((conn) => {
+          this.conn = conn;
+          const collection = this.conn.db("tinder").collection("relations");
+          return collection
+            .aggregate([
+              {
+                $match: {
+                  users: { $elemMatch: { $eq: userID } },
+                },
+              },
+              {
+                $project: {
+                  _id: 0,
+                  users: {
+                    $setDifference: ["$users", [userID]],
+                  },
+                },
+              },
+            ])
+            .toArray();
+        })
+        .then((resArr) => {
+          const res = resArr.map((elem) => elem.users[0]);
+          resolve(res);
+        })
+        .catch((error) => reject(error))
+        .finally(() => {
+          if (this.conn) {
+            this.conn.close();
+          }
+        });
     });
-  };
+  }
 
   getCandidates(userInfo, relatedUsers) {
     return new Promise((resolve, reject) => {
-      this.client.connect()
-      .then((conn) => {
-        userInfo = userInfo[0]
+      this.client.connect().then((conn) => {
+        userInfo = userInfo[0];
         this.conn = conn;
         const collection = this.conn.db("tinder").collection("profiles");
         return collection
@@ -241,9 +244,9 @@ class DBActions {
                 },
                 userID: {
                   $not: {
-                    $in: relatedUsers
-                  }
-                }
+                    $in: relatedUsers,
+                  },
+                },
               },
             },
             {
@@ -290,24 +293,26 @@ class DBActions {
                 receivedNegative: 0,
                 receivedPositive: 0,
                 stats: 0,
-                ageDiff: 0
+                ageDiff: 0,
+                sex: 0,
               },
             },
           ])
           .toArray()
-      .then((candidates) => {
-        resolve(candidates);
-      })
-      .catch((error) => {
-        reject(error);
-      })
-      .finally(() => {
-        if (this.conn) {
-          this.conn.close();
-        }
+          .then((candidates) => {
+            resolve(candidates);
+          })
+          .catch((error) => {
+            reject(error);
+          })
+          .finally(() => {
+            if (this.conn) {
+              this.conn.close();
+            }
+          });
       });
-  })
-})}
+    });
+  }
 }
 
 module.exports = DBActions;

@@ -23,7 +23,7 @@ export default function EditProfileForm() {
         <EditProfileInput name={"degree"} />
         <EditProfileInput name={"city"} />
         <SelectLookingFor />
-        <EditProfileInput name='aboutMe' type='textarea'/>
+        <EditProfileInput name='aboutMe' type={'textarea'}/>
         <EditProfileInput name='image' />
         
 

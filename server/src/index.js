@@ -81,7 +81,6 @@ app.get("/candidatesFor/:userID", (req, res) => {
       let database = new DBActions();
       return database.getUserInfo(userID).then((userInfo) => {
         let database = new DBActions();
-        console.log(relatedUsers)
         return database.getCandidates(userInfo, relatedUsers)
           .then((candidates) => {
             res.send(candidates);
