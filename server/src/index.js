@@ -82,9 +82,6 @@ app.put("/updateProfile", async (req, res) => {
     let keysToRemove = {};
 
     const emptyUserData = {
-      name: "",
-      surname: "",
-      email: "",
       dateOfBirth: new Date("01/01/1970"),
       height: 100,
       degree: "",
@@ -125,7 +122,7 @@ app.post("/Login", async (req, res) => {
   }
 });
 
-// * Inne niż CRUD i promise
+// * Nie CRUD i promise
 app.get("/candidatesFor/:userID", (req, res) => {
   const userID = req.params.userID;
   let database = new DBActions();
@@ -151,6 +148,35 @@ app.get("/candidatesFor/:userID", (req, res) => {
       res.status(500).send("Ooops, we have some problems");
     });
 });
+
+// nie CRUD
+app.post(("/opinions"), (req, res) => {
+  const database1 = new DBActions();
+  const database2 = new DBActions();
+  const queries = [];
+  const {candidateID, isAccepted, senderID} = req.body
+
+  queries.push(database1.setCandidateOpinion(candidateID, isAccepted)
+  .catch(error => console.error(error))
+  )
+  if (isAccepted == true) {
+    queries.push(database2.handlePositiveOpinion(candidateID, senderID)
+    .catch(error => console.error(error))
+    )
+  }
+
+  Promise.all(queries)
+  .then(() => {
+    res.send("Succes")})
+  .catch((error) => {
+    console.error(error)
+    res.status(500).send("Problems")
+  })
+
+
+})
+
+
 
 app.listen(PORT, () => {
   console.log(`Server running at: http://localhost:${PORT}/`);

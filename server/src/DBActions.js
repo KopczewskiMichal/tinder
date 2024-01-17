@@ -1,6 +1,7 @@
 const { MongoClient } = require("mongodb");
 const { v4: uuidv4 } = require("uuid");
 const crypto = require("crypto");
+const { error } = require("console");
 
 class DBActions {
   constructor() {
@@ -45,7 +46,7 @@ class DBActions {
         { userID: data.userID },
         {
           $set: data,
-          $unset: keysToRemove
+          $unset: keysToRemove,
         }
       );
     } catch (error) {
@@ -305,6 +306,56 @@ class DBActions {
           .catch((error) => {
             reject(error);
           })
+          .finally(() => {
+            if (this.conn) {
+              this.conn.close();
+            }
+          });
+      });
+    });
+  }
+
+  // booolean opinion: 0 -negative 1 - positive
+  setCandidateOpinion(candidateID, opinion) {
+    return new Promise((resolve, reject) => {
+      this.client.connect().then((conn) => {
+        this.conn = conn;
+        const collection = this.conn.db("tinder").collection("profiles");
+        return collection
+          .updateOne(
+            { userID: candidateID },
+            {
+              $inc: {
+                receivedPositive: opinion == 1 ? 1 : 0,
+                receivedNegative: opinion == 0 ? 1 : 0,
+              },
+            }
+          )
+          .then(() => {resolve(true)})
+          .catch((error) => {reject(error)})
+          .finally(() => {
+            if (this.conn) {
+              this.conn.close();
+            }
+          });
+      });
+    });
+  }
+
+  // Pierwsza strona, inicjator matchu. Potwierdzenie go wywoła inną metodę
+  handlePositiveOpinion(candidateID, senderID) {
+    return new Promise((resolve, reject) => {
+      this.client.connect().then((conn) => {
+        this.conn = conn;
+        const collection = this.conn.db("tinder").collection("relations");
+        return collection
+          .insertOne({
+            users: [senderID, candidateID],
+            isAccepted: false,
+            dateTime: new Date()
+          })
+          .then(() => {resolve(true)})
+          .catch((error) => {reject(error)})
           .finally(() => {
             if (this.conn) {
               this.conn.close();

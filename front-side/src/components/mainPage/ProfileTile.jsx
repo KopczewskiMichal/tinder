@@ -1,8 +1,8 @@
 import React from "react";
 import ProfilePhoto from "../EditProfile/ProfilePhoto";
 
-export default function ProfileTile({ profileData = null }) {
-  if (profileData == null) {
+export default function ProfileTile({ profileData = null, index = 0 }) {
+  if (profileData == null || index >= profileData.length) {
     return (
       <div className="empty profile-tile">
         <p>To już wszystkie profile na teraz😢</p>
@@ -11,21 +11,57 @@ export default function ProfileTile({ profileData = null }) {
       </div>
     );
   } else {
-    profileData = profileData[1]
+    profileData = profileData[index];
     return (
-      <div className="not-empty profile-tile">
-        <h2>{profileData.name}</h2>
-        <h2>{profileData.age}</h2>
-        <h3>{profileData.surname}</h3>
-        {/* // TODO zamienić undefined na puste stringi */}
-        {profileData.city !== undefined ? (<div><span>City: </span><span>{profileData.city}</span></div>) : null}
-        {profileData.degree !== undefined ? (<div><span>Degree: </span><span>{profileData.degree}</span></div>) : null}
-        {profileData.height !==undefined ? (<div><span>Height: </span><span>{profileData.height}</span></div>) : null}
-        {profileData.lookingFor !== undefined ? (<div><span>Looking For: </span><span>{profileData.lookingFor}</span></div>) : null}
-        {profileData.aboutMe !== undefined ? (<div><span>About Me: </span><span>{profileData.aboutMe}</span></div>) : null}
-        {profileData.image !== undefined ? (<ProfilePhoto src={profileData.image}/>) : null}
-        
+      <div className="not-empty profile-tile bg-white p-6 rounded-md shadow-xl max-w-md mx-auto">
+        {profileData.image !== undefined && (
+          <div className="mb-4 overflow-hidden rounded-full w-100 h-100 mx-auto">
+            <ProfilePhoto src={profileData.image} />
+          </div>
+        )}
+    
+        <div className="flex items-center mb-4 text-center">
+          <h1 className="text-2xl font-bold mr-2">{profileData.name}</h1>
+          <h2 className="text-xl">{profileData.age}</h2>
+        </div>
+        <h3 className="text-lg font-semibold mb-4 text-center">{profileData.surname}</h3>
+    
+        {profileData.city !== undefined && (
+          <div className="mb-2 text-center">
+            <span className="font-semibold">City:</span>
+            <span className="ml-2">{profileData.city}</span>
+          </div>
+        )}
+    
+        {profileData.degree !== undefined && (
+          <div className="mb-2 text-center">
+            <span className="font-semibold">Degree:</span>
+            <span className="ml-2">{profileData.degree}</span>
+          </div>
+        )}
+    
+        {profileData.height !== undefined && (
+          <div className="mb-2 text-center">
+            <span className="font-semibold">Height:</span>
+            <span className="ml-2">{profileData.height}</span>
+          </div>
+        )}
+    
+        {profileData.lookingFor !== undefined && (
+          <div className="mb-2 text-center">
+            <span className="font-semibold">Looking For:</span>
+            <span className="ml-2">{profileData.lookingFor}</span>
+          </div>
+        )}
+    
+        {profileData.aboutMe !== undefined && (
+          <div className="mb-2 text-center">
+            <span className="font-semibold">About Me:</span>
+            <span className="ml-2">{profileData.aboutMe}</span>
+          </div>
+        )}
       </div>
     );
-  }
+    
+    }
 }
