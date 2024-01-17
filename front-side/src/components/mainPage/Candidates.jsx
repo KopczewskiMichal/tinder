@@ -26,7 +26,6 @@ export default function Candidates() {
     };
     axios
       .post("http://127.0.0.1:8080/opinions", toSend)
-      // .then(() => console.log("succes"))
       .catch((err) => alert(err));
   }
 

@@ -22,39 +22,50 @@ body {
     margin-top: 10vh;
   }
 
+  nav {
+    width: 100%;
+    left: 0;
+    padding: 1rem;
+    position: absolute;
+    display: inline-flex;
+    justify-content: space-between;
+  }
+
   #EditProfilePage {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    width: 100%;
-
-    nav {
-      width: 100%;
-      padding: 1rem;
-      position: absolute;
-      display: inline-flex;
-      justify-content: space-between;
-    }
-
+    align-items: flex-start;
+    height: 100vh;
+  
     .main {
       display: flex;
       align-items: center;
       padding-top: 2rem;
+  
       form {
         padding: 2rem;
-        width: 45vw;
+        width: 50vw;
+        height: 100%; /* Nowa linia: Wysokość formularza równa wysokości adaptera */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between; /* Nowa linia: Rozłożenie elementów w formularzu */
       }
-
-      .profile-photo {
-        border-radius: 8px;
+  
+      .adapter {
+        max-width: 50vw;
+        max-height: 50vw;
+        padding: 1rem;
+  
         img {
-          max-height: 50vw;
-          max-width: 50vw;
-          padding: 1rem;
-          margin-top: auto;
-          margin-bottom: auto;
+          object-fit: cover;
+          max-height: 55vh;
+          width: 100%;
         }
       }
     }
   }
+  
+  
+
 }
