@@ -2,7 +2,6 @@ import axios from "axios";
 import React, { useEffect, useState, useReducer } from "react";
 import { useParams } from "react-router-dom";
 import ProfileTile from "./ProfileTile";
-import e from "cors";
 
 export default function Candidates() {
   const { userID } = useParams();

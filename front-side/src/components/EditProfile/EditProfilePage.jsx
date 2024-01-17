@@ -3,7 +3,7 @@ import EditProfileForm from "./EditProfileForm";
 import LogOut from "../Login/LogOut";
 import { useNavigate, useParams } from "react-router-dom";
 import FormikContextProvider from "./FormikContextProvider";
-import ProfilePhoto from "./ProfilePhoto";
+import RealTimeTile from "./RealTimeTile";
 
 
 export default function EditProfilePage() {
@@ -28,7 +28,7 @@ export default function EditProfilePage() {
         <div
         className="main">
         <EditProfileForm />
-        <ProfilePhoto />
+        <RealTimeTile />
         </div>
       </FormikContextProvider>
     </div>

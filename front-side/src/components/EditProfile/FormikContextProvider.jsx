@@ -34,7 +34,6 @@ export default function FormikContextProvider({ children }) {
     axios
       .get(`http://localhost:8080/profiles/${userID}`)
       .then((res) => {
-        console.log("Formik" + formik)
         const updatedUserData = { ...emptyUserData, ...res.data };
         setActUserData(updatedUserData);
         formik.setValues(updatedUserData);
