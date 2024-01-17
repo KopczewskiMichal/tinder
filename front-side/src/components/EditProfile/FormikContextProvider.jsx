@@ -34,6 +34,7 @@ export default function FormikContextProvider({ children }) {
     axios
       .get(`http://localhost:8080/profiles/${userID}`)
       .then((res) => {
+        console.log("Formik" + formik)
         const updatedUserData = { ...emptyUserData, ...res.data };
         setActUserData(updatedUserData);
         formik.setValues(updatedUserData);
@@ -46,6 +47,7 @@ export default function FormikContextProvider({ children }) {
   useEffect(() => {
     getUserData();
   }, []);
+
 
   const formik = useFormik(
     {
@@ -95,6 +97,6 @@ export default function FormikContextProvider({ children }) {
     );
 
   return (
-    <FormikContext.Provider value={formik}>{children}</FormikContext.Provider>
+    <FormikContext.Provider value={{formik, getUserData}}>{children}</FormikContext.Provider>
   );
 }

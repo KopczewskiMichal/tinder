@@ -1,14 +1,14 @@
-import { Formik } from "formik";
-import React, { createContext, useContext } from "react";
+import React from "react";
 import { useFormikContext } from "./FormikContextProvider";
 import EditProfileInput from "./EditProfileInput";
 import SelectLookingFor from "./SelectLookingFor";
-import EditProfilePage from "./EditProfilePage";
-import { every } from "lodash";
+import { Formik } from "formik";
 
 export default function EditProfileForm() {
-  const formik = useFormikContext();
+  // const formik = useFormikContext();
+  const {formik, getUserData} = useFormikContext();
 
+  
 
   return (
       <form
@@ -26,10 +26,9 @@ export default function EditProfileForm() {
         <EditProfileInput name='aboutMe' type={'textarea'}/>
         <EditProfileInput name='image' />
         
-
         <button
           type="reset"
-          onClick={() => formik.resetForm()}
+          onClick={() => getUserData()}
           className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
         >
           Restet changes

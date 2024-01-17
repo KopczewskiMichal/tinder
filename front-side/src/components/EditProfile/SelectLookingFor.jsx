@@ -2,7 +2,7 @@ import React from "react";
 import { useFormikContext } from "./FormikContextProvider";
 
 export default function SelectLookingFor() {
-  const formik = useFormikContext();
+  const {formik} = useFormikContext();
 
   const options = ["Long Relationship", "Frends", "FWB", "I don't know"];
 

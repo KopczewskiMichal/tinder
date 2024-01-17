@@ -2,7 +2,7 @@ import React from "react";
 import { useFormikContext } from "./FormikContextProvider"; //Gdyby nie ten input można by użyć FormInput bez kopiowania
 
 export default function EditProfileInput({ name, type = 'text' }) {
-  const formik = useFormikContext();
+  const {formik} = useFormikContext();
 
   return (
     <div>

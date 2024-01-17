@@ -2,7 +2,7 @@ import React from "react";
 import { useFormikContext } from "./FormikContextProvider";
 
 export default function ProfilePhoto ({src = null}) {
-  const formik = useFormikContext(); 
+  const {formik} = useFormikContext(); 
   let imagePath;
   if (src == null) {
     imagePath = formik.values.image;

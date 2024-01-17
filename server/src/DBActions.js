@@ -279,11 +279,11 @@ class DBActions {
             },
             {
               $sort: {
-                ageDiff: 1,
                 stats: -1,
+                ageDiff: 1,
               },
             },
-            { $limit: 50 },
+            { $limit: 100 },
 
             {
               $project: {
