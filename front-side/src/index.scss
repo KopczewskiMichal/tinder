@@ -46,10 +46,10 @@ body {
       form {
         padding: 2rem;
         width: 50vw;
-        height: 100%; /* Nowa linia: Wysokość formularza równa wysokości adaptera */
+        height: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: space-between; /* Nowa linia: Rozłożenie elementów w formularzu */
+        justify-content: space-between; 
       }
   
       .adapter {
@@ -65,7 +65,29 @@ body {
       }
     }
   }
-  
-  
 
+  #MainPage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+  
+    .profile-tile {
+      margin-top: 5rem;
+      max-width: 30vw;
+      max-height: 70vh;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+  
+      img {
+        max-height: 55vh;
+        width: 100%;
+        object-fit: cover; 
+      }
+
+    }
+  }
+  
 }

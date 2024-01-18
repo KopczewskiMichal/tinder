@@ -2,10 +2,8 @@ import React from "react";
 import { useFormikContext } from "./FormikContextProvider";
 import EditProfileInput from "./EditProfileInput";
 import SelectLookingFor from "./SelectLookingFor";
-import { Formik } from "formik";
 
 export default function EditProfileForm() {
-  // const formik = useFormikContext();
   const {formik, getUserData} = useFormikContext();
 
   

@@ -14,11 +14,10 @@ export default function ProfileTile({ profileData = null, index = 0 }) {
     profileData = profileData[index];
     return (
       <div className="profile-tile bg-white p-6 rounded-md shadow-xl max-w-md mx-auto">
-        {profileData.image !== undefined && (
+      
           <div className="mb-4 overflow-hidden rounded-full w-100 h-100 mx-auto">
             <ProfilePhoto src={profileData.image} />
           </div>
-        )}
     
         <div className="flex items-center mb-4 text-center">
           <h1 className="text-2xl font-bold mr-2">{profileData.name}</h1>
