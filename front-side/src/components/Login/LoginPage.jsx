@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 import LoginDataForm from "./LoginDataForm";
 import { useNavigate } from "react-router-dom";
+import LoadFromFile from "./LoadFromFile";
 
 
 export default function LoginPage () {
@@ -35,7 +36,7 @@ export default function LoginPage () {
       onClick={()=> goToRegisterPage()}
       >Register</button>
       <LoginDataForm />
-
+    <LoadFromFile />
     </div>
     )
 }
