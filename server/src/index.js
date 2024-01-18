@@ -75,7 +75,7 @@ app.post("/Register", async (req, res) => {
 
 app.put("/updateProfile", async (req, res) => {
   try {
-    await updateValidationSchema.validate(req.body);  // Nie trzeba if, to po prostu rzuca błędem więc zapytanie nie przechodzi
+    await updateValidationSchema.validate(req.body); // Nie trzeba if, to po prostu rzuca błędem więc zapytanie nie przechodzi
     const database = new DBActions();
 
     let dataToUpdate = req.body;
@@ -87,27 +87,46 @@ app.put("/updateProfile", async (req, res) => {
       degree: "",
       city: "",
       lookingFor: "",
-      aboutMe:"",
-      image:""
+      aboutMe: "",
+      image: "",
     };
 
     Object.keys(req.body).forEach((key) => {
-      if (emptyUserData.hasOwnProperty(key) && emptyUserData[key] === req.body[key]) {
-        delete dataToUpdate[key]
-        keysToRemove[key] = null
+      if (
+        emptyUserData.hasOwnProperty(key) &&
+        emptyUserData[key] === req.body[key]
+      ) {
+        delete dataToUpdate[key];
+        keysToRemove[key] = null;
       }
     });
-
 
     await database.updateProfile(dataToUpdate, keysToRemove);
     res.send("Succes");
   } catch (error) {
     res.status(500).send(error);
-    console.error(error)
+    console.error(error);
   }
 });
 
-//* Nie CRUD
+// TODO przetestować czy działa
+app.delete("/delete/:id", (req, res) => {
+  const userID = req.params.id
+  const database1 = new DBActions();
+  const database2 = new DBActions();
+
+  const deleteFromProfiles = database1.deleteUserFromProfiles(userID)
+  const deleteFromRelations = database2.deleteUserFromRelations(userID)
+
+  Promise.all([deleteFromProfiles, deleteFromRelations])
+  .then(() => res.send("Succes"))
+  .catch(err => {
+    console.error(err)
+    res.status(500).send("Account still exists")
+  })
+
+})
+
 app.post("/Login", async (req, res) => {
   try {
     const database = new DBActions();
@@ -150,32 +169,34 @@ app.get("/candidatesFor/:userID", (req, res) => {
 });
 
 // nie CRUD
-app.post(("/opinions"), (req, res) => {
+app.post("/opinions", (req, res) => {
   const database1 = new DBActions();
   const database2 = new DBActions();
   const queries = [];
-  const {candidateID, isAccepted, senderID} = req.body
+  const { candidateID, isAccepted, senderID } = req.body;
 
-  queries.push(database1.setCandidateOpinion(candidateID, isAccepted)
-  .catch(error => console.error(error))
-  )
+  queries.push(
+    database1
+      .setCandidateOpinion(candidateID, isAccepted)
+      .catch((error) => console.error(error))
+  );
   if (isAccepted == true) {
-    queries.push(database2.handlePositiveOpinion(candidateID, senderID)
-    .catch(error => console.error(error))
-    )
+    queries.push(
+      database2
+        .handlePositiveOpinion(candidateID, senderID)
+        .catch((error) => console.error(error))
+    );
   }
 
   Promise.all(queries)
-  .then(() => {
-    res.send("Succes")})
-  .catch((error) => {
-    console.error(error)
-    res.status(500).send("Problems")
-  })
-
-
-})
-
+    .then(() => {
+      res.send("Succes");
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).send("Problems");
+    });
+});
 
 
 app.listen(PORT, () => {

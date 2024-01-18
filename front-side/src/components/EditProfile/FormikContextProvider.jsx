@@ -18,17 +18,14 @@ export const emptyUserData = {
   degree: "",
   city: "",
   lookingFor: "",
-  aboutMe:"",
-  image:""
+  aboutMe: "",
+  image: "",
 };
 
 export default function FormikContextProvider({ children }) {
-
-
   const [actUserData, setActUserData] = useState(emptyUserData);
 
-
-  const {userID} = useParams();
+  const { userID } = useParams();
 
   function getUserData() {
     axios
@@ -47,16 +44,14 @@ export default function FormikContextProvider({ children }) {
     getUserData();
   }, []);
 
+  const formik = useFormik({
+    initialValues: actUserData,
 
-  const formik = useFormik(
-    {
-      initialValues: actUserData,
- 
-      validationSchema: Yup.object().shape({
-        name: Yup.string().required("Name is required"),
-        surname: Yup.string().required("Surname is required"),
-        image: Yup.string().max(300, "It is too long"),
-        dateOfBirth: Yup.date()
+    validationSchema: Yup.object().shape({
+      name: Yup.string().required("Name is required"),
+      surname: Yup.string().required("Surname is required"),
+      image: Yup.string().max(300, "It is too long"),
+      dateOfBirth: Yup.date()
         .max(new Date(), "Date of birth cannot be in the future")
         .test(
           "is-adult",
@@ -72,30 +67,35 @@ export default function FormikContextProvider({ children }) {
           }
         )
         .required("Date of birth is required"),
-        height: Yup.number()
-          .min(100, "If Your height is too small, you are child")
-          .max(250, "It is impossible to be higher than 250cm"),
-        degree: Yup.string().max(100),
-        city: Yup.string().max(50, "It is too long"),
-        lookingFor: Yup.string().oneOf(["Long Relationship", "Frends", "FWB", "I don't know"], "Invalid option"),
-        email: Yup.string()
+      height: Yup.number()
+        .min(100, "If Your height is too small, you are child")
+        .max(250, "It is impossible to be higher than 250cm"),
+      degree: Yup.string().max(100),
+      city: Yup.string().max(50, "It is too long"),
+      lookingFor: Yup.string().oneOf(
+        ["Long Relationship", "Frends", "FWB", "I don't know"],
+        "Invalid option"
+      ),
+      email: Yup.string()
         .email("Incorrect email")
         .min(1, "Must be at least 1 character")
         .max(60, "Must be max 60 characters")
         .required("Required"),
-      }),
-      onSubmit: (values) => {
-        axios.put('http://127.0.0.1:8080/updateProfile', {userID: userID, ...values})
-        .then((res) => {
-          // console.log(res)
+    }),
+    onSubmit: (values) => {
+      axios
+        .put("http://127.0.0.1:8080/updateProfile", {
+          userID: userID,
+          ...values,
         })
-        .catch((err) => alert(err))
-      },
-    }
-    
-    );
+        .then((res) => {})
+        .catch((err) => alert(err));
+    },
+  });
 
   return (
-    <FormikContext.Provider value={{formik, getUserData}}>{children}</FormikContext.Provider>
+    <FormikContext.Provider value={{ formik, getUserData }}>
+      {children}
+    </FormikContext.Provider>
   );
 }

@@ -2,6 +2,8 @@ const { MongoClient } = require("mongodb");
 const { v4: uuidv4 } = require("uuid");
 const crypto = require("crypto");
 const { error } = require("console");
+const { resolve } = require("path");
+const { reject } = require("lodash");
 
 class DBActions {
   constructor() {
@@ -148,6 +150,36 @@ class DBActions {
     } finally {
       this.conn && this.conn.close();
     }
+  }
+
+  deleteUserFromProfiles(userID) {
+    return new Promise((resolve, reject) => {
+      this.client.connect().then((conn) => {
+        this.conn = conn;
+        const collection = this.conn.db("tinder").collection("profiles");
+        return collection
+          .deleteOne({
+            userID: userID,
+          })
+          .then(resolve("succes"))
+          .catch((error) => reject(error));
+      });
+    });
+  }
+
+  deleteUserFromRelations(userID) {
+    return new Promise((resolve, reject) => {
+      this.client.connect().then((conn) => {
+        this.conn = conn;
+        const collection = this.conn.db("tinder").collection("relations");
+        return collection
+          .deleteMany({
+            users: { $elemMatch: userID },
+          })
+          .then(resolve("succes"))
+          .catch((error) => reject(error));
+      });
+    });
   }
 
   //object
@@ -331,8 +363,12 @@ class DBActions {
               },
             }
           )
-          .then(() => {resolve(true)})
-          .catch((error) => {reject(error)})
+          .then(() => {
+            resolve(true);
+          })
+          .catch((error) => {
+            reject(error);
+          })
           .finally(() => {
             if (this.conn) {
               this.conn.close();
@@ -352,10 +388,14 @@ class DBActions {
           .insertOne({
             users: [senderID, candidateID],
             isAccepted: false,
-            dateTime: new Date()
+            dateTime: new Date(),
           })
-          .then(() => {resolve(true)})
-          .catch((error) => {reject(error)})
+          .then(() => {
+            resolve(true);
+          })
+          .catch((error) => {
+            reject(error);
+          })
           .finally(() => {
             if (this.conn) {
               this.conn.close();

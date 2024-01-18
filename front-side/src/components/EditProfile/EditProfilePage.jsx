@@ -4,6 +4,8 @@ import LogOut from "../Login/LogOut";
 import { useNavigate, useParams } from "react-router-dom";
 import FormikContextProvider from "./FormikContextProvider";
 import RealTimeTile from "./RealTimeTile";
+import DeleteProfile from "./DeleteProfile";
+import SaveProfileToFile from "./SaveProfileToFile";
 
 
 export default function EditProfilePage() {
@@ -31,6 +33,13 @@ export default function EditProfilePage() {
         <RealTimeTile />
         </div>
       </FormikContextProvider>
+
+      <div
+      className="buttons-container">
+
+      <DeleteProfile />
+      <SaveProfileToFile />
+      </div>
     </div>
   );
 }
