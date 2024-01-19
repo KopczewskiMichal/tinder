@@ -75,6 +75,7 @@ app.post("/Register", async (req, res) => {
 
 
 app.post("/registerProfileFromFile", (req, res) => {
+  console.log(req.body)
   profileValidationSchema.validate(req.body)
   .then(() => {
 Yup.string()
@@ -89,7 +90,7 @@ Yup.string()
     .catch((error)=> res.status(500).send(error))
     .then(() => {
       const database = new DBActions();
-      database.isAccountInDB()
+      database.isAccountInDB(req.body.email)
       .then(result => {
         if (result === false) {
           const database2 = new DBActions();
@@ -142,8 +143,9 @@ app.put("/updateProfile", async (req, res) => {
   }
 });
 
-// TODO przetestować czy działa
+// TODO nie działa
 app.delete("/delete/:id", (req, res) => {
+  console.log(req.params)
   const userID = req.params.id;
   const database1 = new DBActions();
   const database2 = new DBActions();

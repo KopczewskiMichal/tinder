@@ -23,20 +23,24 @@ export default function EditProfileForm() {
         <SelectLookingFor />
         <EditProfileInput name='aboutMe' type={'textarea'}/>
         <EditProfileInput name='image' />
-        
+        <div
+        className="form-buttons"
+        >
+
         <button
           type="reset"
           onClick={() => getUserData()}
           className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-        >
+          >
           Restet changes
         </button>
         <button
           type="submit"
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        >
+          >
           Apply changes
         </button>
+          </div>
       </form>
   );
 }

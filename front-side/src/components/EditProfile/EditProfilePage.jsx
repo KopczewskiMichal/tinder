@@ -32,13 +32,13 @@ export default function EditProfilePage() {
         <EditProfileForm />
         <RealTimeTile />
       <SaveProfileToFile />
+      <DeleteProfile />
         </div>
       </FormikContextProvider>
 
       <div
       className="buttons-container">
 
-      <DeleteProfile />
       </div>
     </div>
   );
