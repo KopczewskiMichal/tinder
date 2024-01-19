@@ -150,7 +150,6 @@ class DBActions {
   }
 
   deleteUserFromProfiles(userID) {
-    console.log(userID)
     return new Promise((resolve, reject) => {
       this.client.connect().then((conn) => {
         this.conn = conn;

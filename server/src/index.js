@@ -75,7 +75,6 @@ app.post("/Register", async (req, res) => {
 
 
 app.post("/registerProfileFromFile", (req, res) => {
-  console.log(req.body)
   profileValidationSchema.validate(req.body)
   .then(() => {
 Yup.string()
@@ -143,9 +142,7 @@ app.put("/updateProfile", async (req, res) => {
   }
 });
 
-// TODO nie działa
 app.delete("/delete/:id", (req, res) => {
-  console.log(req.params)
   const userID = req.params.id;
   const database1 = new DBActions();
   const database2 = new DBActions();

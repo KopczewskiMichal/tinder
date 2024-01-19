@@ -4,13 +4,11 @@ import React from "react";
 export default function LoadFromFile() {
   const sendProfileData = (data) => {
     axios
-      .post("http://127.0.0.1/registerProfileFromFile", data)
+      .post("http://127.0.0.1:8080/registerProfileFromFile", data)
       .then((res) => {
-        console.log("Utworzono profil");
       })
       .catch((err) => {
-        console.log(err);
-        alert("Problems");
+        alert(err.response.data);
       });
   };
 
@@ -20,11 +18,10 @@ export default function LoadFromFile() {
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
-        const fileContent = e.target.result;
+        const fileContent = JSON.parse(e.target.result);
+        sendProfileData(fileContent);
       };
       const data = reader.readAsText(file);
-      sendProfileData(data);
-      console.log(data);
     }
   };
 
