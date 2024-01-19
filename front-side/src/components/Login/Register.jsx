@@ -67,7 +67,7 @@ export default function Register() {
 
       password: Yup.string()
         .min(5, "Must be at least 5 characters")
-        .max(100, "Seriously, You want to remember more than 100 characters?")
+        .max(100, "Seriously, do You want to remember more than 100 characters?")
         .matches(/[0-9]/, "Password requires a number")
         .matches(/[a-z]/, "Password requires a lowercase letter")
         .matches(/[A-Z]/, "Password requires an uppercase letter")

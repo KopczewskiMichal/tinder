@@ -14,7 +14,7 @@ export default function ProfileTile({ profileData = null, index = 0 }) {
     return (
       <div className="profile-tile bg-white p-6 rounded-md shadow-xl max-w-md mx-auto">
         <div className="mb-4 overflow-hidden rounded-full w-100 h-100 mx-auto">
-          <ProfilePhoto src={profileData.image} />
+          <ProfilePhoto src={profileData.image} />   
         </div>
 
         <div className="flex items-center mb-4 text-center">

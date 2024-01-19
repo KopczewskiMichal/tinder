@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const Yup = require("yup");
 
-const updateValidationSchema = Yup.object().shape({
+const profileValidationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
   surname: Yup.string().required("Surname is required"),
   image: Yup.string().max(300, "It is too long"),
@@ -73,9 +73,42 @@ app.post("/Register", async (req, res) => {
   }
 });
 
+
+app.post("/registerProfileFromFile", (req, res) => {
+  profileValidationSchema.validate(req.body)
+  .then(() => {
+Yup.string()
+        .min(5, "Must be at least 5 characters")
+        .max(100, "Seriously, do You want to remember more than 100 characters?")
+        .matches(/[0-9]/, "Password requires a number")
+        .matches(/[a-z]/, "Password requires a lowercase letter")
+        .matches(/[A-Z]/, "Password requires an uppercase letter")
+        .matches(/[^\w]/, "Password requires a symbol")
+        .required("Required")
+    .validate(req.body.password)
+    .catch((error)=> res.status(500).send(error))
+    .then(() => {
+      const database = new DBActions();
+      database.isAccountInDB()
+      .then(result => {
+        if (result === false) {
+          const database2 = new DBActions();
+          database2.createAccount(req.body)
+          .then(result => res.send(result))
+        } else {
+          res.status(500).send("Email exists in db")
+        }
+      })
+    })
+  })
+  .catch((err) => res.status(500).send("Invalid profile data"))
+
+
+});
+
 app.put("/updateProfile", async (req, res) => {
   try {
-    await updateValidationSchema.validate(req.body); // Nie trzeba if, to po prostu rzuca błędem więc zapytanie nie przechodzi
+    await profileValidationSchema.validate(req.body); // Nie trzeba if, to po prostu rzuca błędem więc zapytanie nie przechodzi
     const database = new DBActions();
 
     let dataToUpdate = req.body;
@@ -111,21 +144,20 @@ app.put("/updateProfile", async (req, res) => {
 
 // TODO przetestować czy działa
 app.delete("/delete/:id", (req, res) => {
-  const userID = req.params.id
+  const userID = req.params.id;
   const database1 = new DBActions();
   const database2 = new DBActions();
 
-  const deleteFromProfiles = database1.deleteUserFromProfiles(userID)
-  const deleteFromRelations = database2.deleteUserFromRelations(userID)
+  const deleteFromProfiles = database1.deleteUserFromProfiles(userID);
+  const deleteFromRelations = database2.deleteUserFromRelations(userID);
 
   Promise.all([deleteFromProfiles, deleteFromRelations])
-  .then(() => res.send("Succes"))
-  .catch(err => {
-    console.error(err)
-    res.status(500).send("Account still exists")
-  })
-
-})
+    .then(() => res.send("Succes"))
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Account still exists");
+    });
+});
 
 app.post("/Login", async (req, res) => {
   try {
@@ -197,7 +229,6 @@ app.post("/opinions", (req, res) => {
       res.status(500).send("Problems");
     });
 });
-
 
 app.listen(PORT, () => {
   console.log(`Server running at: http://localhost:${PORT}/`);

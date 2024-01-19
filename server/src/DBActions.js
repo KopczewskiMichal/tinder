@@ -1,9 +1,6 @@
 const { MongoClient } = require("mongodb");
 const { v4: uuidv4 } = require("uuid");
 const crypto = require("crypto");
-const { error } = require("console");
-const { resolve } = require("path");
-const { reject } = require("lodash");
 
 class DBActions {
   constructor() {
