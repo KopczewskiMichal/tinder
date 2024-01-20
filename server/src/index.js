@@ -173,6 +173,16 @@ app.post("/Login", async (req, res) => {
   }
 });
 
+app.get("/matchesToConfirm/:id", (req, res) => {
+  const userID = req.params.id;
+  const database = new DBActions();  
+  database.getMatchesToConfirm(userID)
+  .then(result => 
+    res.send(result))
+  .catch(err => res.status(500).send(err))
+  
+})
+
 // * Nie CRUD i promise
 app.get("/candidatesFor/:userID", (req, res) => {
   const userID = req.params.userID;

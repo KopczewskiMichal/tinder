@@ -1,7 +1,8 @@
 const { MongoClient } = require("mongodb");
 const { v4: uuidv4 } = require("uuid");
 const crypto = require("crypto");
-const { result } = require("lodash");
+const { result, reject } = require("lodash");
+const { resolve } = require("path");
 
 class DBActions {
   constructor() {
@@ -344,6 +345,62 @@ class DBActions {
           .catch((error) => {
             reject(error);
           })
+          .finally(() => {
+            if (this.conn) {
+              this.conn.close();
+            }
+          });
+      });
+    });
+  }
+
+  getMatchesToConfirm(candidateID) {
+    return new Promise((resolve, reject) => {
+      this.client.connect().then((conn) => {
+        this.conn = conn;
+        const collection = this.conn.db("tinder").collection("relations");
+        return collection
+          .aggregate([
+            {
+              $match: {
+                users: { $elemMatch: { $eq: candidateID } },
+                isAccepted: false,
+              },
+            },
+            {
+              $unwind: "$users",
+            },
+            { $match: { users: { $ne: candidateID } } },
+            {
+              $lookup: {
+                from: "profiles",
+                localField: "users",
+                foreignField: "userID",
+                as: "userData",
+              },
+            },
+            {
+              $project: {
+                _id: 0,
+                "userData.name": 1,
+                "userData.dateOfBirth": 1,
+                "userData.city": 1,
+                "userData.degree": 1,
+                "userData.height": 1,
+                "userData.image": 1,
+              },
+            },
+            { $unwind: "$userData" },
+          ])
+          .toArray()
+          .then((result) => {
+            resolve(
+              result.map((elem) => {
+                return { ...elem["userData"] };
+              })
+            );
+          })
+          .catch((err) => reject(err))
           .finally(() => {
             if (this.conn) {
               this.conn.close();
