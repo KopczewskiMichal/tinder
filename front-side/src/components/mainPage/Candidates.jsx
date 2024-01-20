@@ -6,7 +6,7 @@ import ProfileTile from "./ProfileTile";
 export default function Candidates() {
   const { userID } = useParams();
 
-  const [candidatesArr, setCandidatesArr] = useState(null);
+  const [candidatesArr, setCandidatesArr] = useState([]);
 
   const getCandidates = () => {
     axios.get(`http://127.0.0.1:8080/candidatesFor/${userID}`).then((res) => {
@@ -59,21 +59,26 @@ export default function Candidates() {
     }
   }
 
+
   return (
     <div className="candiates">
       <ProfileTile profileData={candidatesArr} index={state.counter} />
-      <button
-        className="text-5xl"
-        onClick={() => dispatch({ type: "rejectCandidate" })}
-      >
-        ❌
-      </button>
-      <button
-        className="text-5xl"
-        onClick={() => dispatch({ type: "acceptCandidate" })}
-      >
-        ✅
-      </button>
+      {state.counter < candidatesArr.length && (
+        <div className="swipe-buttons">
+          <button
+            className="text-5xl"
+            onClick={() => dispatch({ type: "rejectCandidate" })}
+          >
+            ❌
+          </button>
+          <button
+            className="text-5xl"
+            onClick={() => dispatch({ type: "acceptCandidate" })}
+          >
+            ✅
+          </button>
+        </div>
+      )}
     </div>
   );
 }

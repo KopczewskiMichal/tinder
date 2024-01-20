@@ -159,11 +159,11 @@ class DBActions {
           .deleteOne({
             userID: userID,
           })
-          .then(result => {
+          .then((result) => {
             if (result.deletedCount === 0) {
-              reject("Profile not found")
+              reject("Profile not found");
             } else {
-              resolve('Succes')
+              resolve("Succes");
             }
           })
           .catch((error) => reject(error));
