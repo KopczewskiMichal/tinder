@@ -180,10 +180,17 @@ app.get("/matchesToConfirm/:id", (req, res) => {
   .then(result => 
     res.send(result))
   .catch(err => res.status(500).send(err))
-  
 })
 
-// * Nie CRUD i promise
+app.put("/confirmMatch/:id", (req, res) => {
+  const relationID = req.params.id;
+  const database = new DBActions();
+  database.confirmMatch(relationID)
+  .then(result => res.send(result))
+  .catch(error => res.status(500).send(error))
+
+})
+
 app.get("/candidatesFor/:userID", (req, res) => {
   const userID = req.params.userID;
   let database = new DBActions();

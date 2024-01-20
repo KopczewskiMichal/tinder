@@ -1,4 +1,4 @@
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 const { v4: uuidv4 } = require("uuid");
 const crypto = require("crypto");
 const { result, reject } = require("lodash");
@@ -381,13 +381,14 @@ class DBActions {
             },
             {
               $project: {
-                _id: 0,
+                _id: 1,
                 "userData.name": 1,
                 "userData.dateOfBirth": 1,
                 "userData.city": 1,
                 "userData.degree": 1,
                 "userData.height": 1,
                 "userData.image": 1,
+                "userData.userID": 1,
               },
             },
             { $unwind: "$userData" },
@@ -396,10 +397,46 @@ class DBActions {
           .then((result) => {
             resolve(
               result.map((elem) => {
-                return { ...elem["userData"] };
+                return {_id: elem._id,  ...elem["userData"] };
               })
             );
           })
+          .catch((err) => reject(err))
+          .finally(() => {
+            if (this.conn) {
+              this.conn.close();
+            }
+          });
+      });
+    });
+  }
+
+  confirmMatch(relationID) {
+    return new Promise((resolve, reject) => {
+      this.client.connect().then((conn) => {
+        this.conn = conn;
+        const collection = this.conn.db("tinder").collection("relations");
+        return collection
+          .updateOne(
+            {
+              // _id: {
+              //   $expr: {
+              //     $eq: [
+              //       { $toObjectId: relationID },
+              //       "$_id"
+              //     ]
+              //   }
+              // },
+              _id: new ObjectId(relationID),
+              isAccepted: false,
+            },
+            {
+              $set: {
+                isAccepted: true,
+              },
+            }
+          )
+          .then((result) => resolve(result))
           .catch((err) => reject(err))
           .finally(() => {
             if (this.conn) {
