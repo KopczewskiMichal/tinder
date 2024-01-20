@@ -1,6 +1,7 @@
 const { MongoClient } = require("mongodb");
 const { v4: uuidv4 } = require("uuid");
 const crypto = require("crypto");
+const { result } = require("lodash");
 
 class DBActions {
   constructor() {
@@ -158,7 +159,13 @@ class DBActions {
           .deleteOne({
             userID: userID,
           })
-          .then(resolve("succes"))
+          .then(result => {
+            if (result.deletedCount === 0) {
+              reject("Profile not found")
+            } else {
+              resolve('Succes')
+            }
+          })
           .catch((error) => reject(error));
       });
     });
@@ -174,7 +181,6 @@ class DBActions {
             users: { $elemMatch: { $eq: userID } },
           })
           .then((res) => {
-            console.log(res);
             resolve(res);
           })
           .catch((error) => reject(error));

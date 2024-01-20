@@ -152,10 +152,10 @@ app.delete("/delete/:id", (req, res) => {
   const deleteFromRelations = database2.deleteUserFromRelations(userID);
 
   Promise.all([deleteFromProfiles, deleteFromRelations])
-    .then(() => res.send("Succes"))
+    .then((response) => res.send(response))
     .catch((err) => {
       console.error(err);
-      res.status(500).send("Account still exists");
+      res.status(500).send(err);
     });
 });
 

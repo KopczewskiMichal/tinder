@@ -20,7 +20,6 @@ export default function LoginDataForm() {
     const cookieString = `${name}=${value}; expires=${expirationDate.toUTCString()}; path=/`;
     document.cookie = cookieString;
   }
-
   const formik = useFormik({
     initialValues: {
       email: "",
