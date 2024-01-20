@@ -171,9 +171,12 @@ class DBActions {
         const collection = this.conn.db("tinder").collection("relations");
         return collection
           .deleteMany({
-            users: { $elemMatch: userID },
+            users: { $elemMatch: { $eq: userID } },
           })
-          .then(resolve("succes"))
+          .then((res) => {
+            console.log(res);
+            resolve(res);
+          })
           .catch((error) => reject(error));
       });
     });

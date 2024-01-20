@@ -1,11 +1,15 @@
 import axios from "axios";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function LoadFromFile() {
+  const navigate = useNavigate();
+
   const sendProfileData = (data) => {
     axios
       .post("http://127.0.0.1:8080/registerProfileFromFile", data)
       .then((res) => {
+        navigate(`/mainPage/${res.data}`)
       })
       .catch((err) => {
         alert(err.response.data);
@@ -21,7 +25,7 @@ export default function LoadFromFile() {
         const fileContent = JSON.parse(e.target.result);
         sendProfileData(fileContent);
       };
-      const data = reader.readAsText(file);
+      reader.readAsText(file);
     }
   };
 

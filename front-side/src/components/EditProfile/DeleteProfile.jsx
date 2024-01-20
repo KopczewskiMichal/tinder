@@ -4,7 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 
 export default function DeleteProfile() {
   const navigate = useNavigate();
-  const userID = useParams();
+  const userID = useParams().userID
 
   function handleLogOut() {
     document.cookie = `userID=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
@@ -16,6 +16,7 @@ export default function DeleteProfile() {
       .delete(`http://127.0.0.1:8080/delete/${userID}`)
       .then((res) => {
         handleLogOut();
+        console.log(res)
       })
       .catch((error) => {
         alert("There were some problems...");

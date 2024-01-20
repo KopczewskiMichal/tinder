@@ -144,6 +144,7 @@ app.put("/updateProfile", async (req, res) => {
 
 app.delete("/delete/:id", (req, res) => {
   const userID = req.params.id;
+  console.log(req.params);
   const database1 = new DBActions();
   const database2 = new DBActions();
 
