@@ -73,37 +73,38 @@ app.post("/Register", async (req, res) => {
   }
 });
 
-
 app.post("/registerProfileFromFile", (req, res) => {
-  profileValidationSchema.validate(req.body)
-  .then(() => {
-Yup.string()
+  profileValidationSchema
+    .validate(req.body)
+    .then(() => {
+      Yup.string()
         .min(5, "Must be at least 5 characters")
-        .max(100, "Seriously, do You want to remember more than 100 characters?")
+        .max(
+          100,
+          "Seriously, do You want to remember more than 100 characters?"
+        )
         .matches(/[0-9]/, "Password requires a number")
         .matches(/[a-z]/, "Password requires a lowercase letter")
         .matches(/[A-Z]/, "Password requires an uppercase letter")
         .matches(/[^\w]/, "Password requires a symbol")
         .required("Required")
-    .validate(req.body.password)
-    .catch((error)=> res.status(500).send(error))
-    .then(() => {
-      const database = new DBActions();
-      database.isAccountInDB(req.body.email)
-      .then(result => {
-        if (result === false) {
-          const database2 = new DBActions();
-          database2.createAccount(req.body)
-          .then(result => res.send(result))
-        } else {
-          res.status(500).send("Email exists in db")
-        }
-      })
+        .validate(req.body.password)
+        .catch((error) => res.status(500).send(error))
+        .then(() => {
+          const database = new DBActions();
+          database.isAccountInDB(req.body.email).then((result) => {
+            if (result === false) {
+              const database2 = new DBActions();
+              database2
+                .createAccount(req.body)
+                .then((result) => res.send(result));
+            } else {
+              res.status(500).send("Email exists in db");
+            }
+          });
+        });
     })
-  })
-  .catch((err) => res.status(500).send("Invalid profile data"))
-
-
+    .catch((err) => res.status(500).send("Invalid profile data"));
 });
 
 app.put("/updateProfile", async (req, res) => {
@@ -175,26 +176,35 @@ app.post("/Login", async (req, res) => {
 
 app.get("/matchesToConfirm/:id", (req, res) => {
   const userID = req.params.id;
-  const database = new DBActions();  
-  database.getMatchesToConfirm(userID)
-  .then(result => 
-    res.send(result))
-  .catch(err => res.status(500).send(err))
-})
+  const database = new DBActions();
+  database
+    .getMatchesToConfirm(userID)
+    .then((result) => res.send(result))
+    .catch((err) => res.status(500).send(err));
+});
 
 app.put("/confirmMatch/:id", (req, res) => {
   const relationID = req.params.id;
   const database = new DBActions();
-  database.confirmMatch(relationID)
-  .then(result => res.send(result))
-  .catch(error => res.status(500).send(error))
+  database
+    .confirmMatch(relationID)
+    .then((result) => res.send(result))
+    .catch((error) => res.status(500).send(error));
+});
 
-})
+app.post("/handleSendMessage", (req, res) => {
+  const relationID = req.body.relationID;
+  const message = req.body.message;
+  const database = new DBActions();
+  database
+    .handleSendMessage(relationID, message)
+    .then((result) => res.send(result))
+    .catch((error) => res.status(500).send(error));
+});
 
 app.get("/candidatesFor/:userID", (req, res) => {
   const userID = req.params.userID;
   let database = new DBActions();
-
   database
     .getRelatedWith(userID)
     .then((relatedUsers) => {

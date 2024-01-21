@@ -3,6 +3,7 @@ const { v4: uuidv4 } = require("uuid");
 const crypto = require("crypto");
 const { result, reject } = require("lodash");
 const { resolve } = require("path");
+const { error } = require("console");
 
 class DBActions {
   constructor() {
@@ -397,7 +398,7 @@ class DBActions {
           .then((result) => {
             resolve(
               result.map((elem) => {
-                return {_id: elem._id,  ...elem["userData"] };
+                return { _id: elem._id, ...elem["userData"] };
               })
             );
           })
@@ -419,25 +420,39 @@ class DBActions {
         return collection
           .updateOne(
             {
-              // _id: {
-              //   $expr: {
-              //     $eq: [
-              //       { $toObjectId: relationID },
-              //       "$_id"
-              //     ]
-              //   }
-              // },
               _id: new ObjectId(relationID),
               isAccepted: false,
             },
             {
               $set: {
                 isAccepted: true,
+                messages: [],
               },
             }
           )
           .then((result) => resolve(result))
           .catch((err) => reject(err))
+          .finally(() => {
+            if (this.conn) {
+              this.conn.close();
+            }
+          });
+      });
+    });
+  }
+
+  handleSendMessage(relationID, message) {
+    return new Promise((resolve, reject) => {
+      this.client.connect().then((conn) => {
+        this.conn = conn;
+        const collection = this.conn.db("tinder").collection("relations");
+        return collection
+          .updateOne(
+            { _id: new ObjectId(relationID) },
+            { $push: { messages: { datetime: new Date(), ...message } } }
+          )
+          .then((result) => resolve(result))
+          .catch((error) => reject(error))
           .finally(() => {
             if (this.conn) {
               this.conn.close();
