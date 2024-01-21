@@ -202,6 +202,15 @@ app.post("/handleSendMessage", (req, res) => {
     .catch((error) => res.status(500).send(error));
 });
 
+app.get(("/getRelationMessages/:id"), (req, res) => {
+  const id = req.params.id
+  const database = new DBActions();
+  database
+  .getRelationMessages(id)
+    .then((result) => res.send(result))
+    .catch((error) => res.status(500).send(error));
+})
+
 app.get("/candidatesFor/:userID", (req, res) => {
   const userID = req.params.userID;
   let database = new DBActions();

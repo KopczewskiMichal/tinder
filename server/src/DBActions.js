@@ -462,6 +462,40 @@ class DBActions {
     });
   }
 
+  getRelationMessages(relationID) {
+    return new Promise((resolve, reject) => {
+      this.client.connect().then((conn) => {
+        this.conn = conn;
+        const collection = this.conn.db("tinder").collection("relations");
+        return collection
+          .aggregate([
+            {
+              $match: { _id: new ObjectId(relationID) },
+            },
+            { $project: { _id: 0, messages: 1 } },
+            { $unwind: "$messages" },
+            {
+              $sort: { "messages.datetime": 1 },
+            },
+            { $limit: 300 },
+          ])
+          .toArray()
+          .then((result) => {
+            const toSend = result.map(elem => {return elem.messages})
+            resolve(toSend);
+          })
+          .catch((error) => {
+            reject(error);
+          })
+          .finally(() => {
+            if (this.conn) {
+              this.conn.close();
+            }
+          });
+      });
+    });
+  }
+
   // booolean opinion: 0 -negative 1 - positive
   setCandidateOpinion(candidateID, opinion) {
     return new Promise((resolve, reject) => {
