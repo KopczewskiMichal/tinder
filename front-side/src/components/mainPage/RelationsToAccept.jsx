@@ -7,24 +7,31 @@ export default function RelationsToAccept() {
   const { userID } = useParams();
 
   const [candidatesArr, setCandidatesArr] = useState([]);
+  const [convedrsationsSamples, setConversationSamples] = useState([]);
 
   const getCandidates = () => {
     axios
       .get(`http://127.0.0.1:8080/matchesToConfirm/${userID}`)
       .then((res) => {
         setCandidatesArr(res.data);
-        console.log(res.data);
       });
   };
 
- const getConversationSamples = () => {
-  axios
-  .get //TODO ta metoda
- }
+  const getConversationSamples = () => {
+    axios
+      .get(`http://127.0.0.1:8080/conversationSamples/${userID}`)
+      .then((res) => {
+        setConversationSamples(res.data);
+      })
+      .catch((err) => console.log(err));
+    };
 
   useEffect(() => {
+    getConversationSamples();
     getCandidates();
   }, []);
+
+  console.log(convedrsationsSamples)
 
   return (
     <div id="RelationsToAcceptContainer">
@@ -37,6 +44,11 @@ export default function RelationsToAccept() {
           );
         })}
 
+        {convedrsationsSamples.map((elem, index) => {return (
+          <li key={`a${index}`}>
+            <p>{elem.lastMessage.text}</p>
+          </li>
+        )})}
       </ul>
     </div>
   );

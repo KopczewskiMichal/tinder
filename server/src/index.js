@@ -191,14 +191,14 @@ app.put("/confirmMatch", (req, res) => {
   const database = new DBActions();
   if (opinion === true) {
     database
-    .confirmMatch(relationID, opinion)
-    .then((result) => res.send(result))
-    .catch((error) => res.status(500).send(error));
+      .confirmMatch(relationID, opinion)
+      .then((result) => res.send(result))
+      .catch((error) => res.status(500).send(error));
   } else {
     database
-    .rejectMatch(relationID)
-    .then((result) => res.send(result))
-    .catch((error) => res.status(500).send(error));
+      .rejectMatch(relationID)
+      .then((result) => res.send(result))
+      .catch((error) => res.status(500).send(error));
   }
 });
 
@@ -212,14 +212,14 @@ app.post("/handleSendMessage", (req, res) => {
     .catch((error) => res.status(500).send(error));
 });
 
-app.get(("/getRelationMessages/:id"), (req, res) => {
-  const id = req.params.id
+app.get("/getRelationMessages/:id", (req, res) => {
+  const id = req.params.id;
   const database = new DBActions();
   database
-  .getRelationMessages(id)
+    .getRelationMessages(id)
     .then((result) => res.send(result))
     .catch((error) => res.status(500).send(error));
-})
+});
 
 app.get("/candidatesFor/:userID", (req, res) => {
   const userID = req.params.userID;
@@ -280,11 +280,12 @@ app.get("/conversationSamples/:id", (req, res) => {
   const database = new DBActions();
   const userID = req.params.id;
   database
-  .getRelationSamples(userID)
-  .then(result => res.send(result))
-  .catch(err => res.status(500).send(err))
-
-})
+    .getRelationSamples(userID)
+    .then((result) => res.send(result))
+    .catch((err) => {
+      res.status(500).send(err);
+    });
+});
 
 app.listen(PORT, () => {
   console.log(`Server running at: http://localhost:${PORT}/`);
