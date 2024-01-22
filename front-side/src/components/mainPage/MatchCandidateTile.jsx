@@ -6,8 +6,15 @@ export default function MatchCandidateTile (data) {
 
  // TODO ogarnij to poiniżej
   const handleAcceptMatch = (opinion) => {
+    const payload = {
+      id: data._id,
+      opinion: opinion
+    }
+
+    // TODO Obsługa co dalej po otrzymaniu odpowiedzi, pewnie usunięcie z tablicy elementu lub reload strony
     axios
-    .put(`http://127.0.0.1:8080/acceptMatch/${data._id}`)
+    .put(`http://127.0.0.1:8080/acceptMatch`, payload)
+    
   } 
 
   return (
@@ -22,8 +29,11 @@ export default function MatchCandidateTile (data) {
 
       <div>
         <button
-        onClick={handleAcceptMatch}
+        onClick={() => handleAcceptMatch(true)}
         >✅</button>
+        <button
+        onClick={() => handleAcceptMatch(false)}
+        >❌</button>
       </div>
     </div>
   )
