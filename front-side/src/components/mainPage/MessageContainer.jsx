@@ -16,8 +16,8 @@ export default function MessageContainer() {
 
   return (
     <div id="MessageContainer">
-      <ActRelationContext.Provider value={[relationIndex, updateRelationIndex]}>
         <RelationsToAccept />
+      <ActRelationContext.Provider value={[relationIndex, updateRelationIndex]}>
       </ActRelationContext.Provider>
     </div>
   );

@@ -78,4 +78,17 @@ body #MainPage .profile-tile img {
 body #MainPage .save-button {
   position: absolute;
   top: 4rem;
+}
+body #MainPage #MessageContainer #RelationsToAcceptContainer .MatchCandidateTile {
+  display: flex;
+  flex-direction: row;
+}
+body #MainPage #MessageContainer #RelationsToAcceptContainer .MatchCandidateTile .rightSide {
+  width: 100%;
+}
+body #MainPage #MessageContainer #RelationsToAcceptContainer .MatchCandidateTile .MatchConfirmButtons {
+  display: flex;
+  font-size: 2rem;
+  width: 100%;
+  justify-content: space-around;
 }/*# sourceMappingURL=index.css.map */

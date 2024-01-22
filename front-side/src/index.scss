@@ -92,6 +92,25 @@ body {
     position: absolute;
     top: 4rem;
   }
+
+  #MessageContainer {
+
+    #RelationsToAcceptContainer{
+      .MatchCandidateTile{
+        display: flex;
+        flex-direction: row;
+        .rightSide {
+          width: 100%;
+        }
+          .MatchConfirmButtons{
+            display: flex;
+            font-size: 2rem;
+            width: 100%;
+            justify-content: space-around;
+          }
+      }
+    }
+  }
   }
   
 }

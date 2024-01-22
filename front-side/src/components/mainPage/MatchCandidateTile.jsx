@@ -20,16 +20,20 @@ export default function MatchCandidateTile (data) {
 
   return (
     <div
-    className="MatchCandidateTile " >
+    className="MatchCandidateTile" >
       {/* <img
       className="rounded-full w-20"
       src={data.image} alt="Obraz użytkownika" /> */}
        <ProfilePhoto src={data.image} className="rounded-full w-20 h-20"/>   
+       <div
+       className="rightSide"
+       >
+
       <h2
       className="text-xl font-bold"
       >{data.name}</h2>
 
-      <div>
+      <div className="MatchConfirmButtons">
         <button
         onClick={() => handleAcceptMatch(true)}
         >✅</button>
@@ -38,5 +42,6 @@ export default function MatchCandidateTile (data) {
         >❌</button>
       </div>
     </div>
+        </div>
   )
 }

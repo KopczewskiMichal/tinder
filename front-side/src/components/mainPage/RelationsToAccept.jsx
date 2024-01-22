@@ -20,7 +20,9 @@ export default function RelationsToAccept () {
   }, []);
 
   return (
-    <div>
+    <div
+    id="RelationsToAcceptContainer"
+    >
       <ul>
 
       {candidatesArr.map((elem, index) =>  {return (
