@@ -2,6 +2,7 @@ import React from "react";
 import LogOut from "../Login/LogOut";
 import { useNavigate, useParams } from "react-router-dom";
 import Candidates from "./Candidates";
+import MessageContainer from "./MessageContainer";
 
 
 export default function MainPage () {
@@ -22,6 +23,7 @@ export default function MainPage () {
       >Edit Profile</button>
       </nav>
 
+      <MessageContainer />
       <Candidates />
     </div>
   )

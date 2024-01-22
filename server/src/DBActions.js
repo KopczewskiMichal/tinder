@@ -1,9 +1,6 @@
 const { MongoClient, ObjectId } = require("mongodb");
 const { v4: uuidv4 } = require("uuid");
 const crypto = require("crypto");
-const { result, reject } = require("lodash");
-const { resolve } = require("path");
-const { error } = require("console");
 
 class DBActions {
   constructor() {
@@ -382,7 +379,7 @@ class DBActions {
             },
             {
               $project: {
-                _id: 1,
+                _id: 1, // * jest to id relacji
                 "userData.name": 1,
                 "userData.dateOfBirth": 1,
                 "userData.city": 1,
@@ -412,6 +409,7 @@ class DBActions {
     });
   }
 
+  // TODO Zrobic to 2stronne, także dla odrzucenia matcha
   confirmMatch(relationID) {
     return new Promise((resolve, reject) => {
       this.client.connect().then((conn) => {
