@@ -409,7 +409,6 @@ class DBActions {
     });
   }
 
-  // TODO Zrobic to 2stronne, także dla odrzucenia matcha
   confirmMatch(relationID) {
     return new Promise((resolve, reject) => {
       this.client.connect().then((conn) => {
@@ -428,6 +427,24 @@ class DBActions {
               },
             }
           )
+          .then((result) => resolve(result))
+          .catch((err) => reject(err))
+          .finally(() => {
+            if (this.conn) {
+              this.conn.close();
+            }
+          });
+      });
+    });
+  }
+
+  rejectMatch(relationID) {
+    return new Promise((resolve, reject) => {
+      this.client.connect().then((conn) => {
+        this.conn = conn;
+        const collection = this.conn.db("tinder").collection("relations");
+        return collection
+          .deleteOne({ _id: new ObjectId(relationID) })
           .then((result) => resolve(result))
           .catch((err) => reject(err))
           .finally(() => {
@@ -479,7 +496,9 @@ class DBActions {
           ])
           .toArray()
           .then((result) => {
-            const toSend = result.map(elem => {return elem.messages})
+            const toSend = result.map((elem) => {
+              return elem.messages;
+            });
             resolve(toSend);
           })
           .catch((error) => {

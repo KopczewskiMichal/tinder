@@ -183,13 +183,22 @@ app.get("/matchesToConfirm/:id", (req, res) => {
     .catch((err) => res.status(500).send(err));
 });
 
-app.put("/confirmMatch/:id", (req, res) => {
-  const relationID = req.params.id;
+// * nie CRUD
+app.put("/confirmMatch", (req, res) => {
+  const relationID = req.body.id;
+  const opinion = req.body.opinion;
   const database = new DBActions();
-  database
-    .confirmMatch(relationID)
+  if (opinion === true) {
+    database
+    .confirmMatch(relationID, opinion)
     .then((result) => res.send(result))
     .catch((error) => res.status(500).send(error));
+  } else {
+    database
+    .rejectMatch(relationID)
+    .then((result) => res.send(result))
+    .catch((error) => res.status(500).send(error));
+  }
 });
 
 app.post("/handleSendMessage", (req, res) => {
