@@ -1,5 +1,6 @@
 import axios from "axios";
 import React from "react";
+import ProfilePhoto from "../EditProfile/ProfilePhoto";
 
 export default function MatchCandidateTile (data) {
   data = data.data
@@ -20,9 +21,10 @@ export default function MatchCandidateTile (data) {
   return (
     <div
     className="MatchCandidateTile " >
-      <img
+      {/* <img
       className="rounded-full w-20"
-      src={data.image} alt="Obraz użytkownika" />
+      src={data.image} alt="Obraz użytkownika" /> */}
+       <ProfilePhoto src={data.image} className="rounded-full w-20 h-20"/>   
       <h2
       className="text-xl font-bold"
       >{data.name}</h2>

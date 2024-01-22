@@ -444,7 +444,7 @@ class DBActions {
         this.conn = conn;
         const collection = this.conn.db("tinder").collection("relations");
         return collection
-          .deleteOne({ _id: new ObjectId(relationID) })git
+          .deleteOne({ _id: new ObjectId(relationID) })
           .then((result) => resolve(result))
           .catch((err) => reject(err))
           .finally(() => {

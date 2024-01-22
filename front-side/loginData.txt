@@ -10,3 +10,5 @@ hasła konta Mateusza niestety nie znamy
 nsx@gmail.com
 43$dfFD
 
+  "name": "Cellica",
+  "password": "JSjs2@24",
