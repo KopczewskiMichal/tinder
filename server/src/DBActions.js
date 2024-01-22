@@ -513,6 +513,67 @@ class DBActions {
     });
   }
 
+  getRelationSamples(userID) {
+    return new Promise((resolve, reject) => {
+      this.client.connect().then((conn) => {
+        this.conn = conn;
+        const collection = this.conn.db("tinder").collection("relations");
+        return collection
+          .aggregate([
+            {
+              $match: {
+                users: { $elemMatch: { $eq: userID } },
+                isAccepted: true,
+                messages: { $exists: true },
+              },
+            },
+            {
+              $project: {
+                lastMessage: { $arrayElemAt: ["$messages", -1] },
+                userID: "$users",
+              },
+            },
+            {
+              $unwind: "$userID",
+            },
+            {
+              $match: { userID: { $ne: userID } },
+            },
+            {
+              $lookup: {
+                from: "profiles",
+                localField: "userID",
+                foreignField: "userID",
+                as: "userData",
+              },
+            },
+            {
+              $project: {
+                _id: 1,
+                senderName: "$userData.name",
+                userImage: "$userData.image",
+                lastMessage: 1,
+                messages: 1,
+              },
+            },
+            { $sort: { "lastMessage.datetime": -1 } },
+          ])
+          .toArray()
+          .then((result) => {
+            resolve(result);
+          })
+          .catch((error) => {
+            reject(error);
+          })
+          .finally(() => {
+            if (this.conn) {
+              this.conn.close();
+            }
+          });
+      });
+    });
+  }
+
   // booolean opinion: 0 -negative 1 - positive
   setCandidateOpinion(candidateID, opinion) {
     return new Promise((resolve, reject) => {

@@ -10,6 +10,7 @@ const PORT = 8080;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const Yup = require("yup");
+const { result } = require("lodash");
 
 const profileValidationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -245,7 +246,7 @@ app.get("/candidatesFor/:userID", (req, res) => {
     });
 });
 
-// nie CRUD
+// * nie CRUD
 app.post("/opinions", (req, res) => {
   const database1 = new DBActions();
   const database2 = new DBActions();
@@ -274,6 +275,16 @@ app.post("/opinions", (req, res) => {
       res.status(500).send("Problems");
     });
 });
+
+app.get("/conversationSamples/:id", (req, res) => {
+  const database = new DBActions();
+  const userID = req.params.id;
+  database
+  .getRelationSamples(userID)
+  .then(result => res.send(result))
+  .catch(err => res.status(500).send(err))
+
+})
 
 app.listen(PORT, () => {
   console.log(`Server running at: http://localhost:${PORT}/`);
