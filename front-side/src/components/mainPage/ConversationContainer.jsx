@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useActRelationContext } from "./MessageContainer";
 import { useParams } from "react-router-dom";
+import SendMessage from "./SendMessage";
 
 export default function ConversationContainer () {
  const [conversationHistory, setConversationHistory] = useState([]);
@@ -26,13 +27,14 @@ export default function ConversationContainer () {
     return (
       <div id="ConversationContainer">
         {relationID === 0 ? (
-          <p className="text-xl font-bold">Działa</p>
+          <p className="text-xl font-bold">Send first Message</p>
         ) : (
           <>
             {conversationHistory.length === 0 ? (
               <p className="text-xl font-bold">Write first message</p>
             ) : (
-              <div className="space-y-4">
+              
+              <div className="allMessages space-y-4">
                 {conversationHistory.map((elem, index) => (
                   <div
                     className={`message p-4 rounded-lg shadow-md ${
@@ -49,6 +51,7 @@ export default function ConversationContainer () {
                 ))}
               </div>
             )}
+            <SendMessage />
           </>
         )}
     </div>

@@ -127,6 +127,11 @@ body {
       #ConversationContainer {
         width: 70%;
         height: 70vh;
+
+        .allMessages{
+          height: 80%;
+          overflow: scroll;
+        }
       }
     }
   }

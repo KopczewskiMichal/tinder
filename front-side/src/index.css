@@ -113,4 +113,8 @@ body #MainPage #MessageContainer #RelationsToAcceptContainer .messageSampleTile 
 body #MainPage #MessageContainer #ConversationContainer {
   width: 70%;
   height: 70vh;
+}
+body #MainPage #MessageContainer #ConversationContainer .allMessages {
+  height: 80%;
+  overflow: scroll;
 }/*# sourceMappingURL=index.css.map */
