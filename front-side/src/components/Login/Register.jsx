@@ -103,7 +103,7 @@ export default function Register() {
       >
         Login
       </button>
-      <FormikContext.Provider value={formik.value}>
+      <FormikContext.Provider value={formik}>
         <form
           onSubmit={formik.handleSubmit}
           className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"

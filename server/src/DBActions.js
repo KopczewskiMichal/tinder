@@ -1,6 +1,7 @@
 const { MongoClient, ObjectId } = require("mongodb");
 const { v4: uuidv4 } = require("uuid");
 const crypto = require("crypto");
+const { query } = require("express");
 
 class DBActions {
   constructor() {
@@ -62,7 +63,8 @@ class DBActions {
       const collection = this.conn.db("tinder").collection("profiles");
       const profileData = sourceData;
       const passwordHash = crypto
-        .createHash("sha256", sourceData.password)
+        .createHash("sha256")
+        .update(sourceData.password)
         .digest("hex"); // Nie przechowujemy jawnego hasła!!!
       delete profileData.password;
       profileData.passwordHash = passwordHash;
@@ -135,9 +137,12 @@ class DBActions {
       const collection = this.conn.db("tinder").collection("profiles");
       const queryRes = await collection.findOne({ email: sourceData.email });
       const givenPasswordHash = crypto
-        .createHash("sha256", sourceData.password)
+        .createHash("sha256")
+        .update(sourceData.password)
         .digest("hex");
-      if (queryRes != null && givenPasswordHash == queryRes.passwordHash) {
+
+      console.log(queryRes.passwordHash, givenPasswordHash);
+      if (queryRes != null && givenPasswordHash === queryRes.passwordHash) {
         return queryRes.userID;
       } else {
         return null;
@@ -560,7 +565,11 @@ class DBActions {
           ])
           .toArray()
           .then((result) => {
-            const toSend = result.map(elem => ({...elem, userImage: elem.userImage[0], senderName: elem.senderName[0]})) 
+            const toSend = result.map((elem) => ({
+              ...elem,
+              userImage: elem.userImage[0],
+              senderName: elem.senderName[0],
+            }));
             resolve(toSend);
           })
           .catch((error) => {
