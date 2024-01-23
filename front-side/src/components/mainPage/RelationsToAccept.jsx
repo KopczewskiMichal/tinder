@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import MatchCandidateTile from "./MatchCandidateTile";
+import MessageSampleTile from "./MessageSampleTile";
 
 export default function RelationsToAccept() {
   const { userID } = useParams();
@@ -31,8 +32,6 @@ export default function RelationsToAccept() {
     getCandidates();
   }, []);
 
-  console.log(convedrsationsSamples)
-
   return (
     <div id="RelationsToAcceptContainer">
       <ul>
@@ -46,10 +45,10 @@ export default function RelationsToAccept() {
 
         {convedrsationsSamples.map((elem, index) => {return (
           <li key={`a${index}`}>
-            <p>{elem.lastMessage.text}</p>
+            <MessageSampleTile messageSample={elem} />
           </li>
         )})}
-      </ul>
+       </ul>
     </div>
   );
 }

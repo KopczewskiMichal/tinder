@@ -560,8 +560,8 @@ class DBActions {
           ])
           .toArray()
           .then((result) => {
-            const toSend = result.map(elem => {return {userImage: elem.userImage[0], senderName: elem.senderName[0], ...elem }}) 
-            resolve(result);
+            const toSend = result.map(elem => ({...elem, userImage: elem.userImage[0], senderName: elem.senderName[0]})) 
+            resolve(toSend);
           })
           .catch((error) => {
             reject(error);

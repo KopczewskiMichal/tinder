@@ -14,7 +14,8 @@ export default function MatchCandidateTile (data) {
 
     // TODO Obsługa co dalej po otrzymaniu odpowiedzi, pewnie usunięcie z tablicy elementu lub reload strony
     axios
-    .put(`http://127.0.0.1:8080/acceptMatch`, payload)
+    .put(`http://127.0.0.1:8080/confirmMatch`, payload)
+    .then((result) => console.log(result))
     
   } 
 

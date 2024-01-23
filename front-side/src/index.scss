@@ -1,6 +1,7 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
 
 body {
   margin: 0;
@@ -96,20 +97,33 @@ body {
   #MessageContainer {
 
     #RelationsToAcceptContainer{
+      width: 30%;
+      ul > li {
+        padding: 0.5rem;
+      }
+
       .MatchCandidateTile{
         display: flex;
         flex-direction: row;
-        .rightSide {
-          width: 100%;
-        }
+
           .MatchConfirmButtons{
             display: flex;
             font-size: 2rem;
             width: 100%;
             justify-content: space-around;
+            button:hover {
+              font-size: 80%;
+            }
           }
       }
+      .messageSampleTile {
+        display: flex;
+        max-height: 5rem;
+        overflow: hidden;
+        
+      }
     }
+
   }
   }
   

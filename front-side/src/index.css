@@ -79,6 +79,12 @@ body #MainPage .save-button {
   position: absolute;
   top: 4rem;
 }
+body #MainPage #MessageContainer #RelationsToAcceptContainer {
+  max-width: 30%;
+}
+body #MainPage #MessageContainer #RelationsToAcceptContainer ul > li {
+  padding: 0.5rem;
+}
 body #MainPage #MessageContainer #RelationsToAcceptContainer .MatchCandidateTile {
   display: flex;
   flex-direction: row;
@@ -91,4 +97,12 @@ body #MainPage #MessageContainer #RelationsToAcceptContainer .MatchCandidateTile
   font-size: 2rem;
   width: 100%;
   justify-content: space-around;
+}
+body #MainPage #MessageContainer #RelationsToAcceptContainer .MatchCandidateTile .MatchConfirmButtons button:hover {
+  font-size: 80%;
+}
+body #MainPage #MessageContainer #RelationsToAcceptContainer .messageSampleTile {
+  display: flex;
+  max-height: 5rem;
+  overflow: hidden;
 }/*# sourceMappingURL=index.css.map */

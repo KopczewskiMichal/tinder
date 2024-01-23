@@ -115,7 +115,7 @@ app.put("/updateProfile", async (req, res) => {
 
     let dataToUpdate = req.body;
     let keysToRemove = {};
-
+    
     const emptyUserData = {
       dateOfBirth: new Date("01/01/1970"),
       height: 100,
@@ -149,19 +149,49 @@ app.delete("/delete/:id", (req, res) => {
   console.log(req.params);
   const database1 = new DBActions();
   const database2 = new DBActions();
-
+  
   const deleteFromProfiles = database1.deleteUserFromProfiles(userID);
   const deleteFromRelations = database2.deleteUserFromRelations(userID);
-
+  
   Promise.all([deleteFromProfiles, deleteFromRelations])
-    .then((response) => res.send(response))
-    .catch((err) => {
-      console.error(err);
+  .then((response) => res.send(response))
+  .catch((err) => {
+    console.error(err);
       res.status(500).send(err);
     });
-});
+  });
+  
+  // * nie CRUD
+  app.put("/opinions", (req, res) => {
+    const database1 = new DBActions();
+    const database2 = new DBActions();
+    const queries = [];
+    const { candidateID, isAccepted, senderID } = req.body;
+  
+    queries.push(
+      database1
+        .setCandidateOpinion(candidateID, isAccepted)
+        .catch((error) => console.error(error))
+    );
+    if (isAccepted == true) {
+      queries.push(
+        database2
+          .handlePositiveOpinion(candidateID, senderID)
+          .catch((error) => console.error(error))
+      );
+    }
+  
+    Promise.all(queries)
+      .then(() => {
+        res.send("Succes");
+      })
+      .catch((error) => {
+        console.error(error);
+        res.status(500).send("Problems");
+      });
+  });
 
-app.post("/Login", async (req, res) => {
+  app.post("/Login", async (req, res) => {
   try {
     const database = new DBActions();
     const userID = await database.login(req.body);
@@ -191,7 +221,7 @@ app.put("/confirmMatch", (req, res) => {
   const database = new DBActions();
   if (opinion === true) {
     database
-      .confirmMatch(relationID, opinion)
+      .confirmMatch(relationID)
       .then((result) => res.send(result))
       .catch((error) => res.status(500).send(error));
   } else {
@@ -246,35 +276,6 @@ app.get("/candidatesFor/:userID", (req, res) => {
     });
 });
 
-// * nie CRUD
-app.post("/opinions", (req, res) => {
-  const database1 = new DBActions();
-  const database2 = new DBActions();
-  const queries = [];
-  const { candidateID, isAccepted, senderID } = req.body;
-
-  queries.push(
-    database1
-      .setCandidateOpinion(candidateID, isAccepted)
-      .catch((error) => console.error(error))
-  );
-  if (isAccepted == true) {
-    queries.push(
-      database2
-        .handlePositiveOpinion(candidateID, senderID)
-        .catch((error) => console.error(error))
-    );
-  }
-
-  Promise.all(queries)
-    .then(() => {
-      res.send("Succes");
-    })
-    .catch((error) => {
-      console.error(error);
-      res.status(500).send("Problems");
-    });
-});
 
 app.get("/conversationSamples/:id", (req, res) => {
   const database = new DBActions();
