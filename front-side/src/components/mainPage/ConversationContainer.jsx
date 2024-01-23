@@ -23,30 +23,37 @@ export default function ConversationContainer () {
   }, [relationID])
 
 
-  return (
-    <div id="ConversationContainer">
-      <div className="conversation-window">
+    return (
+      <div id="ConversationContainer">
         {relationID === 0 ? (
-          <p>Choose conversation</p>
+          <p className="text-xl font-bold">Działa</p>
         ) : (
           <>
             {conversationHistory.length === 0 ? (
-              <p>Write first message</p>
+              <p className="text-xl font-bold">Write first message</p>
             ) : (
-              conversationHistory.map((elem, index) => (
-                <div className="message" key={index}>
-                  <span>
-                    {elem.userID === userID ? "Me: " : "Friend: "}
-                  </span>
-                  <p>{elem.text}</p>
-                </div>
-              ))
+              <div className="space-y-4">
+                {conversationHistory.map((elem, index) => (
+                  <div
+                    className={`message p-4 rounded-lg shadow-md ${
+                      elem.userID === userID ? 'ml-auto bg-blue-300' : 'mr-auto'
+                    }`}
+                    key={index}
+                    style={{ maxWidth: '70%' }}
+                  >
+                    <span className="font-semibold">
+                      {elem.userID === userID ? "Me: " : "Friend: "}
+                    </span>
+                    <p>{elem.text}</p>
+                  </div>
+                ))}
+              </div>
             )}
           </>
         )}
-      </div>
     </div>
-  );
-  
+    
+);
+
     
 }

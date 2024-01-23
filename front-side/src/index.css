@@ -55,10 +55,12 @@ body #EditProfilePage .main .adapter img {
   width: 100%;
 }
 body #MainPage {
-  width: 100%;
+  margin: auto;
+  width: 80%;
   height: 100%;
   display: flex;
   justify-content: center;
+  align-items: space-between;
 }
 body #MainPage .profile-tile {
   margin-top: 5rem;
@@ -79,8 +81,13 @@ body #MainPage .save-button {
   position: absolute;
   top: 4rem;
 }
+body #MainPage #MessageContainer {
+  margin-top: 5rem;
+  display: flex;
+  flex-direction: row;
+}
 body #MainPage #MessageContainer #RelationsToAcceptContainer {
-  max-width: 30%;
+  width: 30%;
 }
 body #MainPage #MessageContainer #RelationsToAcceptContainer ul > li {
   padding: 0.5rem;
@@ -88,9 +95,6 @@ body #MainPage #MessageContainer #RelationsToAcceptContainer ul > li {
 body #MainPage #MessageContainer #RelationsToAcceptContainer .MatchCandidateTile {
   display: flex;
   flex-direction: row;
-}
-body #MainPage #MessageContainer #RelationsToAcceptContainer .MatchCandidateTile .rightSide {
-  width: 100%;
 }
 body #MainPage #MessageContainer #RelationsToAcceptContainer .MatchCandidateTile .MatchConfirmButtons {
   display: flex;
@@ -105,4 +109,8 @@ body #MainPage #MessageContainer #RelationsToAcceptContainer .messageSampleTile 
   display: flex;
   max-height: 5rem;
   overflow: hidden;
+}
+body #MainPage #MessageContainer #ConversationContainer {
+  width: 70%;
+  height: 70vh;
 }/*# sourceMappingURL=index.css.map */
