@@ -3,13 +3,13 @@ import { useParams } from "react-router-dom";
 import ProfilePhoto from "../EditProfile/ProfilePhoto";
 import { useActRelationContext } from "./MessageContainer";
 
-export default function MessageSampleTile({messageSample, myIndex}) {
-  messageSample = messageSample;
+export default function MessageSampleTile({messageSample}) {
   const { userID } = useParams();
-  const [relationIndex, updateRelationIndex] = useActRelationContext();
+  const [relationID, updateRelationID] = useActRelationContext();
+
 
   const handleClick = () => {
-    updateRelationIndex(myIndex)
+    updateRelationID(messageSample._id)
   }
 
   return (

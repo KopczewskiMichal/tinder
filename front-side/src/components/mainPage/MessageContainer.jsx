@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import RelationsToAccept from "./RelationsToAccept";
+import ConversationContainer from "./ConversationContainer";
 
 const ActRelationContext = createContext();
 export const useActRelationContext = () => {
@@ -7,18 +8,18 @@ export const useActRelationContext = () => {
 };
 
 export default function MessageContainer() {
-  const [relationIndex, setRelationIndex] = useState(0);
+  const [relationID, setRelationID] = useState(0);
 
-  const updateRelationIndex = (newValue) => {
-    setRelationIndex(newValue);
-    console.log(relationIndex)
+  const updateRelationID = (newValue) => {
+    setRelationID(newValue);
+    console.log(relationID)
   };
 
   return (
     <div id="MessageContainer">
-      <ActRelationContext.Provider value={[relationIndex, updateRelationIndex]}>
+      <ActRelationContext.Provider value={[relationID, updateRelationID]}>
         <RelationsToAccept />
-
+        <ConversationContainer />
       </ActRelationContext.Provider>
     </div>
   );
