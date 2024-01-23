@@ -99,12 +99,13 @@ body {
       display: flex;
       flex-direction: row;
       #RelationsToAcceptContainer {
-        width: 30%;
+        width: 30vw;
         ul > li {
           padding: 0.5rem;
         }
 
         .MatchCandidateTile {
+          width: 100%;
           display: flex;
           flex-direction: row;
 

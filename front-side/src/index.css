@@ -87,12 +87,13 @@ body #MainPage #MessageContainer {
   flex-direction: row;
 }
 body #MainPage #MessageContainer #RelationsToAcceptContainer {
-  width: 30%;
+  width: 30vw;
 }
 body #MainPage #MessageContainer #RelationsToAcceptContainer ul > li {
   padding: 0.5rem;
 }
 body #MainPage #MessageContainer #RelationsToAcceptContainer .MatchCandidateTile {
+  width: 100%;
   display: flex;
   flex-direction: row;
 }

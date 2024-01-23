@@ -162,7 +162,7 @@ app.delete("/delete/:id", (req, res) => {
   });
   
   // * nie CRUD
-  app.put("/opinions", (req, res) => {
+  app.post("/opinions", (req, res) => {
     const database1 = new DBActions();
     const database2 = new DBActions();
     const queries = [];
