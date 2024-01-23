@@ -8,7 +8,7 @@ export default function RelationsToAccept() {
   const { userID } = useParams();
 
   const [candidatesArr, setCandidatesArr] = useState([]);
-  const [convedrsationsSamples, setConversationSamples] = useState([]);
+  const [conversationsSamples, setConversationSamples] = useState([]);
 
   const getCandidates = () => {
     axios
@@ -43,9 +43,10 @@ export default function RelationsToAccept() {
           );
         })}
 
-        {convedrsationsSamples.map((elem, index) => {return (
+        {conversationsSamples.map((elem, index) => {
+          return (
           <li key={`a${index}`}>
-            <MessageSampleTile messageSample={elem} />
+            <MessageSampleTile messageSample={elem} myIndex={index} />
           </li>
         )})}
        </ul>

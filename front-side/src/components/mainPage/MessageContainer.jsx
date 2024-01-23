@@ -1,5 +1,4 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import axios from "axios";
 import RelationsToAccept from "./RelationsToAccept";
 
 const ActRelationContext = createContext();
@@ -12,15 +11,17 @@ export default function MessageContainer() {
 
   const updateRelationIndex = (newValue) => {
     setRelationIndex(newValue);
+    console.log(relationIndex)
   };
 
   return (
     <div id="MessageContainer">
-        <RelationsToAccept />
       <ActRelationContext.Provider value={[relationIndex, updateRelationIndex]}>
+        <RelationsToAccept />
+
       </ActRelationContext.Provider>
     </div>
   );
 }
 
-// TODO Zapytanie w bazie o Wiadomości użytkownika do trybu wyświetlenie tego po lewej i trochę wiadomości
+
