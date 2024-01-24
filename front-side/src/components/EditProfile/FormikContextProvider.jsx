@@ -88,7 +88,9 @@ export default function FormikContextProvider({ children }) {
           userID: userID,
           ...values,
         })
-        .then((res) => {})
+        .then((res) => {
+          alert("Zaktualizowano profil")
+        })
         .catch((err) => alert(err));
     },
   });

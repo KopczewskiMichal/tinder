@@ -12,6 +12,8 @@ export default function MessageSampleTile({messageSample}) {
     updateRelationID(messageSample._id)
   }
 
+  console.log(messageSample)
+
   return (
     <div className="messageSampleTile"
     onClick={handleClick}

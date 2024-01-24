@@ -10,7 +10,6 @@ const PORT = 8080;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 const Yup = require("yup");
-const { result } = require("lodash");
 
 const profileValidationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -146,7 +145,6 @@ app.put("/updateProfile", async (req, res) => {
 
 app.delete("/delete/:id", (req, res) => {
   const userID = req.params.id;
-  console.log(req.params);
   const database1 = new DBActions();
   const database2 = new DBActions();
   

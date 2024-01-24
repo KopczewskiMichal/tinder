@@ -542,7 +542,7 @@ class DBActions {
               $unwind: "$userID",
             },
             {
-              $match: { userID: { $ne: userID } },
+              $match: { userID: { $eq: userID } }, // Potencjalnie problematyczny warunek
             },
             {
               $lookup: {
@@ -555,6 +555,7 @@ class DBActions {
             {
               $project: {
                 _id: 1,
+                userID:1,
                 senderName: "$userData.name",
                 userImage: "$userData.image",
                 lastMessage: 1,
