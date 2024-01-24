@@ -22,12 +22,9 @@ export default function RealTimeTile () {
   const age = calculateAge(formik.values.dateOfBirth)
 
   return (
-    <div
-      className="adapter"
-    >
+
 
     <ProfileTile 
     profileData={[{...formik.values, age:age}]}/>
-    </div>
   )
 }

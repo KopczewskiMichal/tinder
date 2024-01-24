@@ -535,19 +535,19 @@ class DBActions {
             {
               $project: {
                 lastMessage: { $arrayElemAt: ["$messages", -1] },
-                userID: "$users",
+                converserID: "$users",
               },
             },
             {
-              $unwind: "$userID",
+              $unwind: "$converserID",
             },
             {
-              $match: { userID: { $eq: userID } }, // Potencjalnie problematyczny warunek
+              $match: { converserID: { $ne: userID } }, 
             },
             {
               $lookup: {
                 from: "profiles",
-                localField: "userID",
+                localField: "converserID",
                 foreignField: "userID",
                 as: "userData",
               },
@@ -556,6 +556,7 @@ class DBActions {
               $project: {
                 _id: 1,
                 userID:1,
+                converserID:1,
                 senderName: "$userData.name",
                 userImage: "$userData.image",
                 lastMessage: 1,

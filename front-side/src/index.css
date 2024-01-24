@@ -54,6 +54,22 @@ body #EditProfilePage .main .adapter img {
   max-height: 55vh;
   width: 100%;
 }
+body .profile-tile {
+  max-width: 20vw;
+  height: 85%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+body .profile-tile span {
+  word-wrap: break-word;
+  width: 100%;
+}
+body .profile-tile img {
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
 body #MainPage {
   margin: auto;
   width: 80%;
@@ -61,21 +77,6 @@ body #MainPage {
   display: flex;
   justify-content: center;
   align-items: space-between;
-}
-body #MainPage .profile-tile {
-  margin-top: 5rem;
-  max-width: 30vw;
-  max-height: 70vh;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-body #MainPage .profile-tile img {
-  max-height: 55vh;
-  width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
 }
 body #MainPage .save-button {
   position: absolute;
