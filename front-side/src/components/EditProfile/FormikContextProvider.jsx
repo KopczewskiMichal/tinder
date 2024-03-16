@@ -85,7 +85,7 @@ export default function FormikContextProvider({ children }) {
     }),
     onSubmit: (values) => {
       axios
-        .put("http://127.0.0.1:8080/updateProfile", {
+        .put(`http://${setup["server-ip"]}:8080/updateProfile`, {
           userID: userID,
           ...values,
         })
