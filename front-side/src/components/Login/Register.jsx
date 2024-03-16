@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import SelectSex from "./SelectSex";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+const setup = require("./../../setup.json")
 
 const FormikContext = createContext();
 
@@ -80,7 +81,7 @@ export default function Register() {
     }),
     onSubmit: (values) => {
       axios
-        .post("http://localhost:8080/Register", values)
+        .post(`http://${setup["server-ip"]}:8080/Register`, values)
         .then(function (response) {
           setCookie("userID", response.data, 30)
           navigate(`/mainPage/${response.data}`)

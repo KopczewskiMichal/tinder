@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import ProfilePhoto from "../EditProfile/ProfilePhoto";
+const setup = require("./../../setup.json")
 
 export default function MatchCandidateTile (data) {
   data = data.data
@@ -12,7 +13,7 @@ export default function MatchCandidateTile (data) {
     }
 
     axios
-    .put(`http://127.0.0.1:8080/confirmMatch`, payload)
+    .put(`http://${setup["server-ip"]}:8080/confirmMatch`, payload)
     .then((result) => window.location.reload())
     
   } 

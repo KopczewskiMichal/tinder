@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+const setup = require("./../../setup.json")
 
 const FormikContext = createContext();
 
@@ -29,7 +30,7 @@ export default function FormikContextProvider({ children }) {
 
   function getUserData() {
     axios
-      .get(`http://localhost:8080/profiles/${userID}`)
+      .get(`http://${setup["server-ip"]}:8080/profiles/${userID}`)
       .then((res) => {
         const updatedUserData = { ...emptyUserData, ...res.data };
         setActUserData(updatedUserData);

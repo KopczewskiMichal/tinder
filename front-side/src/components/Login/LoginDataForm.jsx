@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+const setup = require("./../../setup.json")
 
 const FormikContext = createContext();
 
@@ -42,7 +43,7 @@ export default function LoginDataForm() {
     }),
     onSubmit: (values) => {
       axios
-        .post("http://localhost:8080/Login", values)
+        .post(`http://${setup["server-ip"]}:8080/Login`, values)
         .then(function (response) {
           setCookie("userID", response.data, 7);
           navigate(`/mainPage/${response.data}`);

@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import MatchCandidateTile from "./MatchCandidateTile";
 import MessageSampleTile from "./MessageSampleTile";
+const setup = require("./../../setup.json")
 
 export default function RelationsToAccept() {
   const { userID } = useParams();
@@ -12,7 +13,7 @@ export default function RelationsToAccept() {
 
   const getCandidates = () => {
     axios
-      .get(`http://127.0.0.1:8080/matchesToConfirm/${userID}`)
+      .get(`http://${setup["server-ip"]}:8080/matchesToConfirm/${userID}`)
       .then((res) => {
         setCandidatesArr(res.data);
       });
@@ -20,7 +21,7 @@ export default function RelationsToAccept() {
 
   const getConversationSamples = () => {
     axios
-      .get(`http://127.0.0.1:8080/conversationSamples/${userID}`)
+      .get(`http://${setup["server-ip"]}:8080/conversationSamples/${userID}`)
       .then((res) => {
         setConversationSamples(res.data);
       })

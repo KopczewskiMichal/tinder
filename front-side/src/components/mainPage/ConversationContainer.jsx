@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useActRelationContext } from "./MessageContainer";
 import { useParams } from "react-router-dom";
 import SendMessage from "./SendMessage";
+const setup = require("./../../setup.json")
 
 export default function ConversationContainer () {
  const [conversationHistory, setConversationHistory] = useState([]);
@@ -14,7 +15,7 @@ export default function ConversationContainer () {
     if (relationID !== 0) {
 
       axios
-      .get(`http://127.0.0.1:8080/getRelationMessages/${relationID}`)
+      .get(`http://${setup["server-ip"]}:8080/getRelationMessages/${relationID}`)
       .then(res => setConversationHistory(res.data))
     }
   }

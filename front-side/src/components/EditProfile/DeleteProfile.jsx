@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
+const setup = require("./../../setup.json");
 
 export default function DeleteProfile() {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ export default function DeleteProfile() {
 
   function handleDelete() {
     axios
-      .delete(`http://127.0.0.1:8080/delete/${userID}`)
+      .delete(`http://${setup["server-ip"]}:8080/delete/${userID}`)
       .then((res) => {
         handleLogOut();
         console.log(res)

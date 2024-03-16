@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState, useReducer } from "react";
 import { useParams } from "react-router-dom";
 import ProfileTile from "./ProfileTile";
+const setup = require("./../../setup.json")
 
 export default function Candidates() {
   const { userID } = useParams();
@@ -25,7 +26,7 @@ export default function Candidates() {
       senderID: userID,
     };
     axios
-      .post("http://127.0.0.1:8080/opinions", toSend)
+      .post(`http:${setup["server-ip"]}:8080/opinions`, toSend)
       .catch((err) => alert(err));
   }
 

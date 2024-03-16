@@ -1,13 +1,14 @@
 import axios from "axios";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+const setup = require("./../../setup.json")
 
 export default function LoadFromFile() {
   const navigate = useNavigate();
 
   const sendProfileData = (data) => {
     axios
-      .post("http://127.0.0.1:8080/registerProfileFromFile", data)
+      .post(`http://${setup["server-ip"]}:8080/registerProfileFromFile`, data)
       .then((res) => {
         navigate(`/mainPage/${res.data}`)
       })

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import { useActRelationContext } from "./MessageContainer";
 import axios from "axios";
+const setup = require("./../../setup.json")
 
 export default function SendMessage() {
   const { userID } = useParams();
@@ -15,7 +16,7 @@ export default function SendMessage() {
   const handleSendMessage = () => {
     if (message.trim() !== "") {
       axios
-        .post("http://127.0.0.1:8080/handleSendMessage", {
+        .post(`http://${setup["server-ip"]}:8080/handleSendMessage`, {
           relationID: relationID,
           message: {
             userID: userID,
