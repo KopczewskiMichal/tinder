@@ -1,0 +1,94 @@
+Date : 2024-06-04 15:26:18
+Directory : /Users/michalkopczewski/Documents/Sem3/tinder
+Total : 47 files,  4266 codes, 344 comments, 350 blanks, all 4960 lines
+
+Languages
++----------------+------------+------------+------------+------------+------------+
+| language       | files      | code       | comment    | blank      | total      |
++----------------+------------+------------+------------+------------+------------+
+| JavaScript     |          9 |      1,499 |        318 |        115 |      1,932 |
+| JSON           |          5 |      1,343 |          0 |          5 |      1,348 |
+| JavaScript JSX |         26 |      1,084 |          0 |        168 |      1,252 |
+| CSS            |          2 |        155 |          0 |          6 |        161 |
+| SCSS           |          1 |        123 |          3 |         20 |        146 |
+| Markdown       |          1 |         38 |          0 |         33 |         71 |
+| HTML           |          1 |         20 |         23 |          1 |         44 |
+| YAML           |          1 |          2 |          0 |          2 |          4 |
+| Shell Script   |          1 |          2 |          0 |          0 |          2 |
++----------------+------------+------------+------------+------------+------------+
+
+Directories
++---------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                                          | files      | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                             |         47 |      4,266 |        344 |        350 |      4,960 |
+| . (Files)                                                                                                     |          1 |          2 |          0 |          2 |          4 |
+| .yarn                                                                                                         |          1 |        542 |        300 |         52 |        894 |
+| .yarn/releases                                                                                                |          1 |        542 |        300 |         52 |        894 |
+| front-side                                                                                                    |         40 |      1,556 |         36 |        244 |      1,836 |
+| front-side (Files)                                                                                            |          3 |         98 |          1 |         34 |        133 |
+| front-side/public                                                                                             |          2 |         28 |         23 |          3 |         54 |
+| front-side/src                                                                                                |         35 |      1,430 |         12 |        207 |      1,649 |
+| front-side/src (Files)                                                                                        |          9 |        346 |         12 |         39 |        397 |
+| front-side/src/components                                                                                     |         26 |      1,084 |          0 |        168 |      1,252 |
+| front-side/src/components/EditProfile                                                                         |          9 |        319 |          0 |         52 |        371 |
+| front-side/src/components/Login                                                                               |          8 |        369 |          0 |         45 |        414 |
+| front-side/src/components/mainPage                                                                            |          9 |        396 |          0 |         71 |        467 |
+| server                                                                                                        |          5 |      2,166 |          8 |         52 |      2,226 |
+| server (Files)                                                                                                |          3 |      1,283 |          0 |          2 |      1,285 |
+| server/src                                                                                                    |          2 |        883 |          8 |         50 |        941 |
++---------------------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++---------------------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| filename                                                                                                      | language       | code       | comment    | blank      | total      |
++---------------------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
+| /Users/michalkopczewski/Documents/Sem3/tinder/.yarn/releases/yarn-4.0.2.cjs                                   | JavaScript     |        542 |        300 |         52 |        894 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/.yarnrc.yml                                                     | YAML           |          2 |          0 |          2 |          4 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/README.md                                            | Markdown       |         38 |          0 |         33 |         71 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/package.json                                         | JSON           |         51 |          0 |          1 |         52 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/public/index.html                                    | HTML           |         20 |         23 |          1 |         44 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/public/manifest.json                                 | JSON           |          8 |          0 |          2 |         10 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/App.css                                          | CSS            |         33 |          0 |          6 |         39 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/App.js                                           | JavaScript     |         35 |          0 |          5 |         40 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/App.test.js                                      | JavaScript     |          7 |          0 |          2 |          9 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/EditProfile/DeleteProfile.jsx         | JavaScript JSX |         31 |          0 |          5 |         36 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/EditProfile/EditProfileForm.jsx       | JavaScript JSX |         41 |          0 |          6 |         47 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/EditProfile/EditProfileInput.jsx      | JavaScript JSX |         24 |          0 |          3 |         27 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/EditProfile/EditProfilePage.jsx       | JavaScript JSX |         40 |          0 |          6 |         46 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/EditProfile/FormikContextProvider.jsx | JavaScript JSX |         95 |          0 |         10 |        105 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/EditProfile/ProfilePhoto.jsx          | JavaScript JSX |         14 |          0 |          2 |         16 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/EditProfile/RealTimeTile.jsx          | JavaScript JSX |         21 |          0 |          9 |         30 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/EditProfile/SaveProfileToFile.jsx     | JavaScript JSX |         23 |          0 |          7 |         30 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/EditProfile/SelectLookingFor.jsx      | JavaScript JSX |         30 |          0 |          4 |         34 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/Login/FormInput.jsx                   | JavaScript JSX |         22 |          0 |          2 |         24 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/Login/LoadFromFile.jsx                | JavaScript JSX |         42 |          0 |          6 |         48 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/Login/LogOut.jsx                      | JavaScript JSX |         15 |          0 |          3 |         18 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/Login/LoginDataForm.jsx               | JavaScript JSX |         77 |          0 |          6 |         83 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/Login/LoginPage.jsx                   | JavaScript JSX |         35 |          0 |          7 |         42 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/Login/Register.jsx                    | JavaScript JSX |        125 |          0 |         13 |        138 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/Login/RegisterInput.jsx               | JavaScript JSX |         24 |          0 |          4 |         28 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/Login/SelectSex.jsx                   | JavaScript JSX |         29 |          0 |          4 |         33 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/mainPage/Candidates.jsx               | JavaScript JSX |         76 |          0 |         10 |         86 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/mainPage/ConversationContainer.jsx    | JavaScript JSX |         52 |          0 |         11 |         63 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/mainPage/MatchCandidateTile.jsx       | JavaScript JSX |         37 |          0 |          8 |         45 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/mainPage/MessageContainer.jsx         | JavaScript JSX |         22 |          0 |          8 |         30 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/mainPage/MessageSampleTile.jsx        | JavaScript JSX |         32 |          0 |          8 |         40 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/mainPage/ProfileTile.jsx              | JavaScript JSX |         58 |          0 |          8 |         66 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/mainPage/RelationsToAccept.jsx        | JavaScript JSX |         49 |          0 |          8 |         57 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/mainPage/SendMessage.jsx              | JavaScript JSX |         44 |          0 |          6 |         50 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/components/mainPage/mainPage.jsx                 | JavaScript JSX |         26 |          0 |          4 |         30 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/index.css                                        | CSS            |        122 |          0 |          0 |        122 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/index.js                                         | JavaScript     |         10 |          5 |          3 |         18 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/index.scss                                       | SCSS           |        123 |          3 |         20 |        146 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/reportWebVitals.js                               | JavaScript     |         12 |          0 |          2 |         14 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/setup.json                                       | JSON           |          3 |          0 |          0 |          3 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/src/setupTests.js                                    | JavaScript     |          1 |          4 |          1 |          6 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/front-side/tailwind.config.js                                   | JavaScript     |          9 |          1 |          0 |         10 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/server/CurlCommands.sh                                          | Shell Script   |          2 |          0 |          0 |          2 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/server/package-lock.json                                        | JSON           |      1,260 |          0 |          1 |      1,261 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/server/package.json                                             | JSON           |         21 |          0 |          1 |         22 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/server/src/DBActions.js                                         | JavaScript     |        619 |          6 |         24 |        649 |
+| /Users/michalkopczewski/Documents/Sem3/tinder/server/src/index.js                                             | JavaScript     |        264 |          2 |         26 |        292 |
+| Total                                                                                                         |                |      4,266 |        344 |        350 |      4,960 |
++---------------------------------------------------------------------------------------------------------------+----------------+------------+------------+------------+------------+
