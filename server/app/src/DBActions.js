@@ -5,7 +5,7 @@ const { query } = require("express");
 
 class DBActions {
   constructor() {
-    const ipAdress = "127.0.0.1";
+    const ipAdress = "mongodb-service";
     const port = "27017";
     const databaseName = "tinder";
     const connectionString = `mongodb://${ipAdress}:${port}/${databaseName}`;
