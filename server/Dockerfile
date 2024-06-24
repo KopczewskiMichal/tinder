@@ -11,4 +11,4 @@ COPY ./app .
 EXPOSE 8080
 
 # Uruchom aplikację
-CMD ["node", "app.js"]
+CMD ["node", "src/index.js"]
