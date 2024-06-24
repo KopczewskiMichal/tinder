@@ -10,7 +10,7 @@ export default function Candidates() {
   const [candidatesArr, setCandidatesArr] = useState([]);
 
   const getCandidates = () => {
-    axios.get(`http://127.0.0.1:8080/candidatesFor/${userID}`).then((res) => {
+    axios.get(`http://${setup["server-ip"]}:8080/candidatesFor/${userID}`).then((res) => {
       setCandidatesArr(res.data);
     });
   };
