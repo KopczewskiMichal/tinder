@@ -8,3 +8,6 @@ kubectl delete -f ./mongo-deployment.yaml
 kubectl delete -f ./mongo-service.yaml
 # kubectl delete -f ./mongo-pvc.yaml
 
+kubectl delete -f ./proxy-config-map.yaml
+kubectl delete -f ./proxy-deployment.yaml
+kubectl delete -f ./proxy-service.yaml
